@@ -1,0 +1,138 @@
+.header, .md-toolbar-tools {
+	background-color:rgb(50,60,67) !important;
+}
+
+.cashnavtoggle {
+	background-image: url(../img/ui/cashnavtoggle.svg);
+	background-size:contain;
+}
+
+.module-groups {
+	display: flex;
+	flex-direction: column;
+}
+
+.modules {
+	flex: 1;
+}
+
+.paperassets-module-img {
+	background-image: url(../img/ui/paperassets.jpg);
+	background-size: cover;
+}
+
+.commodities-module-img {
+	background-image: url(../img/ui/commodities.jpg);
+	background-size: cover;
+}
+
+.entrepreneurial-module-img {
+	background-image: url(../img/ui/entrepreneurship.jpg);
+	background-size: cover;
+}
+
+.realestate-module-img {
+	background-image: url(../img/ui/realestate.jpg);
+	background-size: cover;
+}
+
+.personal-module-img {
+	background-image: url(../img/ui/personal.jpg);
+	background-size: cover;
+}
+
+.module-selection:hover {
+	-webkit-filter: grayscale(0) blur(0);
+	filter: grayscale(0) blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection {
+	-webkit-filter: grayscale(1) blur(3px);
+	filter: grayscale(1) blur(3px);
+}
+
+.module-selection-personal:hover {
+	background-image: url(../img/ui/personal.jpg);
+	-webkit-filter: blur(0);
+	filter: blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection-personal {
+	-webkit-filter: blur(3px);
+	background-image: linear-gradient(to bottom, rgba(217, 83, 79, 0.3), rgba(217, 83, 79, 0.3)), url(../img/ui/personal.jpg);
+	filter: blur(3px);
+	background-size: cover;
+}
+
+.module-selection-fixed:hover {
+	background-image: url(../img/ui/fixed.jpg);
+	-webkit-filter: blur(0);
+	filter: blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection-fixed {
+	-webkit-filter: blur(3px);
+	background-image: linear-gradient(to bottom, rgba(217, 83, 79, 0.3), rgba(217, 83, 79, 0.3)), url(../img/ui/fixed.jpg);
+	filter: blur(3px);
+	background-size: cover;
+}
+
+.module-selection-home:hover {
+	background-image: url(../img/ui/home.jpg);
+	-webkit-filter: blur(0);
+	filter: blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection-home {
+	-webkit-filter: blur(3px);
+	background-image: linear-gradient(to bottom, rgba(217, 83, 79, 0.3), rgba(217, 83, 79, 0.3)), url(../img/ui/home.jpg);
+	filter: blur(3px);
+	background-size: cover;
+}
+
+
+.module-selection-car:hover {
+	background-image: url(../img/ui/car.jpg);
+	-webkit-filter: blur(0);
+	filter: blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection-car {
+	-webkit-filter: blur(3px);
+	background-image: linear-gradient(to bottom, rgba(217, 83, 79, 0.3), rgba(217, 83, 79, 0.3)), url(../img/ui/car.jpg);
+	filter: blur(3px);
+	background-size: cover;
+}
+
+.module-selection-business:hover {
+	background-image: url(../img/ui/business.jpg);
+	-webkit-filter: blur(0);
+	filter: blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection-business {
+	-webkit-filter: blur(3px);
+	background-image: linear-gradient(to bottom, rgba(217, 83, 79, 0.3), rgba(217, 83, 79, 0.3)), url(../img/ui/business.jpg);
+	filter: blur(3px);
+	background-size: cover;
+}
+
+.module-selection-student:hover {
+	background-image: url(../img/ui/student.jpg);
+	-webkit-filter: blur(0);
+	filter: blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.module-selection-student {
+	-webkit-filter: blur(3px);
+	background-image: linear-gradient(to bottom, rgba(217, 83, 79, 0.3), rgba(217, 83, 79, 0.3)), url(../img/ui/student.jpg);
+	filter: blur(3px);
+	background-size: cover;
+}

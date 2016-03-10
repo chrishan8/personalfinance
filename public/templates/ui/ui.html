@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html ng-app="financeapp">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Angular Material style sheet -->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    </head>
+    <body ng-controller="UICtrl" layout="column" ng-cloak>
+        <!-- Navbar -->
+        <md-toolbar layout="row" class="header md-whiteframe-z3">
+            <md-button ng-click="toggleLeft()" class="md-primary cashnavtoggle"></md-button>
+            <h1>Slate</h1>
+            <span flex></span>
+            <h1>Home</h1>
+            <span flex></span>
+        </md-toolbar>
+        <!-- Main Content Wrapper -->
+        <div flex layout="row">
+            <!-- Balance SideNav -->
+            <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+                <md-toolbar>
+                    <h1 class="md-toolbar-tools">Cash<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h1>
+                </md-toolbar>
+                <md-list>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Chase Student Checking</h3>
+                            <p>$1,100</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Paypal</h3>
+                            <p>$250</p>
+                        </div>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Total</h3>
+                            <p>$6,580</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+                <md-toolbar>
+                    <h1 class="md-toolbar-tools">Accounts<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h1>
+                </md-toolbar>
+                <md-list>
+                <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Fixed Expenses</h3>
+                            <p>$1,500</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Investment<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
+                            <p>$1,500</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" style="padding-left:15px">
+                            <h3>E-Trade</h3>
+                            <p>$200</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" style="padding-left:15px">
+                            <h3>Robinhood</h3>
+                            <p>$1,300</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Long-Term Savings<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
+                            <p>$13,230</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" style="padding-left:15px">
+                            <h3>CD Account</h3>
+                            <p>$8,000</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" style="padding-left:15px">
+                            <h3>Chase Savings</h3>
+                            <p>$5,230</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Personal Development</h3>
+                            <p>$300</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Personal Spending</h3>
+                            <p>$800</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Retirement<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
+                            <p>$12,000</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" style="padding-left:15px">
+                            <h3>401-K</h3>
+                            <p>$12,000</p>
+                        </div>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text">
+                            <h3>Total</h3>
+                            <p>$29,330</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-sidenav>
+            <!-- Main Content Wrapper -->
+            <div flex layout="column">
+                <!-- Assets Modules -->
+                <md-content flex class="module-groups">
+                    <div layout="row" class="modules">
+                        <div class="paperassets-module-img module-selection" flex>Paper Assets</div>
+                        <div class="commodities-module-img module-selection" flex>Commodities</div>
+                        <div class="realestate-module-img module-selection" flex>Real Estate</div>
+                        <div class="entrepreneurial-module-img module-selection" flex>Entrepreneurial</div>
+                    </div>
+                </md-content>
+                <md-divider></md-divider>
+                <!-- Liabilities Modules -->
+                <md-content flex class="module-groups">
+                    <div layout="row" class="modules">
+                        <div class="personal-module-img module-selection-personal" flex>Personal Spending</div>
+                        <div class="fixed-module-img module-selection-fixed" flex>Fixed Expenses</div>
+                        <div class="home-module-img module-selection-home" flex>Home</div>
+                    </div>
+                    <div layout="row" class="modules">
+                        <div class="car-module-img module-selection-car" flex>Car</div>
+                        <div class="business-module-img module-selection-business" flex>Business</div>
+                        <div class="student-module-img module-selection-student" flex>Student</div>
+                    </div>
+                </md-content>
+            </div>
+        </div>
+      
+        <!-- Angular Material requires Angular.js Libraries -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+        <!-- Angular Material Library -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Your application bootstrap  -->
+        <script src="public/scripts/app.js"></script>
+        <script src="public/scripts/controllers/uicontrollers.js"></script>
+        <link href="public/stylesheets/ui.css" rel="stylesheet">
+    </body>
+</html>
