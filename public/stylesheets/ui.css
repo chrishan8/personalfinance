@@ -4,7 +4,12 @@
 
 .cashnavtoggle {
 	background-image: url(../img/ui/cashnavtoggle.svg);
-	background-size:contain;
+	background-size: contain;
+}
+
+.logouttoggle {
+	background-image: url(../img/ui/logout.svg);
+	background-size: cover;
 }
 
 .module-groups {

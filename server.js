@@ -98,10 +98,13 @@ app.get('/', function(req, res){
 app.get('/dashboard', app.isAuthenticated, function(req, res){
     res.sendFile('templates/ui/ui.html', {root: './public'})
 })
-
 app.get('/api/me', app.isAuthenticatedAjax, function(req, res){
     res.send({user:req.user})
 })
+app.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
+});
 
 var port = 1337;
 app.listen(port, function() {
