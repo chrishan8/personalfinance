@@ -1,4 +1,5 @@
 var app = angular.module('financeapp', [
 	'ngMaterial',
-	'angular-plaid-link'
+	'angular-plaid-link',
+	'ui.router'
 ])

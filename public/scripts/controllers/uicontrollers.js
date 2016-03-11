@@ -1,5 +1,4 @@
-app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
-    console.log(Data);
+app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', function($scope, $timeout, $mdSidenav, $log, $http) {
     // Left Sidenav Configuration
     $scope.toggleLeft = buildDelayedToggler('left');
 
@@ -30,10 +29,6 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
           		$log.debug("close LEFT is done");
         	});
     };
-
-    // Retrieve User's Financial Data
-    $scope.Accounts = Data.getAccounts();
-    console.log($scope.Accounts);
 }])
 
 

@@ -1,14 +1,12 @@
 app.factory('Data', function () {
-    var data = {
-        Accounts: []
-    };
+    var data = {}
 
     return {
-        getAccounts: function () {
-            return data.Accounts;
+        getAccount: function () {
+            return data;
         },
-        setAccounts: function (Accounts) {
-            data.Accounts = Accounts;
+        setAccount: function (Account) {
+            data = Account;
         }
     };
 });

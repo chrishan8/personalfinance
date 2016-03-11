@@ -9,17 +9,6 @@ app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', funct
         }
     })     
 
-    $scope.signup = function(){
-        $http({
-            method : 'POST',
-            url    : '/signup',
-            data   : $scope.signupForm
-        }).then(function(returnData){
-            console.log(returnData)
-            if ( returnData.data.success ) { window.location.href="/dashboard" }
-        })
-    }
-
     $scope.login = function(){
         $http({
             method : 'POST',
@@ -31,6 +20,14 @@ app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', funct
         })
     }
 
+    $scope.register = function() {
+        Data.setAccount($scope.signupForm);
+    }
+}])
+
+app.controller('registerController', ['$scope', '$http', 'plaidLink', 'Data', function($scope, $http, plaidLink, Data){
+    $scope.signupForm = Data.getAccount();
+    console.log($scope.signupForm);
     $scope.token = '';
     $scope.plaidIsLoaded = plaidLink.isLoaded;
     plaidLink.create({
@@ -41,8 +38,14 @@ app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', funct
                 url    : '/plaidaccounts',
                 params   : {public_token: $scope.token}
             }).then(function(returnData){
-                Data.setAccounts(returnData.data);
-                console.log(Data.getAccounts())
+                $scope.signupForm.accounts = returnData.data.accounts;
+                $http({
+                    method : 'POST',
+                    url    : '/signup',
+                    data   : $scope.signupForm
+                }).then(function(returnData){
+                    if ( returnData.data.success ) { window.location.href="/dashboard" }
+                })
             })
         },
         onExit: function() {
@@ -52,4 +55,8 @@ app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', funct
     $scope.openPlaid = function(bankType) {
         plaidLink.open(bankType);
     };
+
+    angular.element(document).ready(function () {
+        $scope.openPlaid();
+    });
 }])

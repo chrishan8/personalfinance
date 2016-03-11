@@ -1,30 +1,19 @@
 <!DOCTYPE html>
 <html ng-app="financeapp">
     <head>
-    	<title>Hello</title>
+    	<title>Slate</title>
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     </head>
-    <body ng-controller="loginController">
+    <body>
     	
-        <h1>Existing Users</h1>
-        <form ng-submit="login()">
-            <input type="text" ng-model="loginForm.username" placeholder="Username"/>
-            <input type="password" ng-model="loginForm.password" placeholder="Password"/>
-            <input type="submit"/>
-        </form>
-
-        <h1>Register</h1>
-        <form ng-submit="signup()">
-            <input type="text" ng-model="signupForm.username" placeholder="Username"/>
-            <input type="password" ng-model="signupForm.password" placeholder="Password"/>
-            <input type="submit"/>
-        </form>
-        <md-button class="md-primary" ng-click="openPlaid()" ng-disabled="!plaidIsLoaded()">Link Account</md-button>
+        <div ui-view></div>
 
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+
         <!-- Angular Material Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -34,5 +23,6 @@
         <script src="public/scripts/routers/angular-plaid-config.js"></script>
         <script src="public/scripts/controllers/logincontroller.js"></script>
         <script src="public/scripts/services/userdata.js"></script>
+        <script src="public/scripts/routers/loginrouter.js"></script>
     </body>
 </html>
