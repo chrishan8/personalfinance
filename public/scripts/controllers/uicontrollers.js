@@ -29,6 +29,33 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
           		$log.debug("close LEFT is done");
         	});
     };
+
+    // Populate Sidenav with Data
+    $scope.userfinancialdata = [];
+    $http({
+        method : 'GET',
+        url    : '/api/me',
+    }).then(function(returnData){
+        if ( returnData.data.user ) {
+            $scope.user = returnData.data.user;
+            $scope.userfinancialdata = returnData.data.user.accounts;
+        }
+    })
+
+    $scope.search = {
+        subtypeCash : 'checking',
+        subtypeSavings : 'savings'
+    };
+
+    $scope.calculateTotal = function(subtype) {
+        var total = 0;
+        for (var i = 0; i < $scope.userfinancialdata.length; i++) {
+            if ($scope.userfinancialdata[i].subtype == subtype) {
+                total += $scope.userfinancialdata[i].balance.available;
+            }
+        }
+        return total;
+    }
 }])
 
 

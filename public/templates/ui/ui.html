@@ -23,23 +23,17 @@
                     <h1 class="md-toolbar-tools">Cash<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h1>
                 </md-toolbar>
                 <md-list>
-                    <md-list-item class="md-2-line">
+                    <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeCash">
                         <div class="md-list-item-text">
-                            <h3>Chase Student Checking</h3>
-                            <p>$1,100</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Paypal</h3>
-                            <p>$250</p>
+                            <h3>{{account.institution_type}}</h3>
+                            <p>${{account.balance.available}}</p>
                         </div>
                     </md-list-item>
                     <md-divider></md-divider>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Total</h3>
-                            <p>$6,580</p>
+                            <p>${{calculateTotal('checking')}}</p>
                         </div>
                     </md-list-item>
                 </md-list>
@@ -50,74 +44,50 @@
                 <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Fixed Expenses</h3>
-                            <p>$1,500</p>
+                            <p>$0</p>
                         </div>
                     </md-list-item>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Investment<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                            <p>$1,500</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text" style="padding-left:15px">
-                            <h3>E-Trade</h3>
-                            <p>$200</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text" style="padding-left:15px">
-                            <h3>Robinhood</h3>
-                            <p>$1,300</p>
+                            <p>$0</p>
                         </div>
                     </md-list-item>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
-                            <h3>Long-Term Savings<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                            <p>$13,230</p>
+                            <h3>Short-Term Savings<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
+                            <p>${{calculateTotal('savings')}}</p>
                         </div>
                     </md-list-item>
-                    <md-list-item class="md-2-line">
+                    <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeSavings">
                         <div class="md-list-item-text" style="padding-left:15px">
-                            <h3>CD Account</h3>
-                            <p>$8,000</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text" style="padding-left:15px">
-                            <h3>Chase Savings</h3>
-                            <p>$5,230</p>
+                            <h3>{{account.institution_type}}</h3>
+                            <p>${{account.balance.available}}</p>
                         </div>
                     </md-list-item>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Personal Development</h3>
-                            <p>$300</p>
+                            <p>$0</p>
                         </div>
                     </md-list-item>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Personal Spending</h3>
-                            <p>$800</p>
+                            <p>$0</p>
                         </div>
                     </md-list-item>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Retirement<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                            <p>$12,000</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text" style="padding-left:15px">
-                            <h3>401-K</h3>
-                            <p>$12,000</p>
+                            <p>$0</p>
                         </div>
                     </md-list-item>
                     <md-divider></md-divider>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Total</h3>
-                            <p>$29,330</p>
+                            <p>${{calculateTotal('savings')}}</p>
                         </div>
                     </md-list-item>
                 </md-list>
@@ -156,6 +126,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js"></script>
         <!-- Angular Material Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
