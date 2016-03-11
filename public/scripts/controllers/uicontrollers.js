@@ -1,5 +1,7 @@
-app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', function($scope, $timeout, $mdSidenav, $log, $http) {
-	$scope.toggleLeft = buildDelayedToggler('left');
+app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
+    console.log(Data);
+    // Left Sidenav Configuration
+    $scope.toggleLeft = buildDelayedToggler('left');
 
 	function debounce(func, wait, context) {
         var timer;
@@ -28,6 +30,10 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
           		$log.debug("close LEFT is done");
         	});
     };
+
+    // Retrieve User's Financial Data
+    $scope.Accounts = Data.getAccounts();
+    console.log($scope.Accounts);
 }])
 
 

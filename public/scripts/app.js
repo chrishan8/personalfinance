@@ -1,3 +1,4 @@
 var app = angular.module('financeapp', [
-	'ngMaterial'
+	'ngMaterial',
+	'angular-plaid-link'
 ])

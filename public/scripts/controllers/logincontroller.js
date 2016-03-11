@@ -1,4 +1,4 @@
-app.controller('loginController', ['$scope', '$http', function($scope, $http){
+app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', function($scope, $http, plaidLink, Data){
     $http({
         method : 'GET',
         url    : '/api/me',
@@ -30,4 +30,26 @@ app.controller('loginController', ['$scope', '$http', function($scope, $http){
             else { console.log(returnData)}
         })
     }
+
+    $scope.token = '';
+    $scope.plaidIsLoaded = plaidLink.isLoaded;
+    plaidLink.create({
+        onSuccess: function(token) {
+            $scope.token = token;
+            $http({
+                method : 'GET',
+                url    : '/plaidaccounts',
+                params   : {public_token: $scope.token}
+            }).then(function(returnData){
+                Data.setAccounts(returnData.data);
+                console.log(Data.getAccounts())
+            })
+        },
+        onExit: function() {
+            console.log('user closed');
+        }
+    });
+    $scope.openPlaid = function(bankType) {
+        plaidLink.open(bankType);
+    };
 }])

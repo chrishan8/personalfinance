@@ -2,6 +2,7 @@
 <html ng-app="financeapp">
     <head>
     	<title>Hello</title>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     </head>
     <body ng-controller="loginController">
     	
@@ -18,6 +19,8 @@
             <input type="password" ng-model="signupForm.password" placeholder="Password"/>
             <input type="submit"/>
         </form>
+        <md-button class="md-primary" ng-click="openPlaid()" ng-disabled="!plaidIsLoaded()">Link Account</md-button>
+
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
@@ -26,6 +29,10 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="public/scripts/app.js"></script>
+        <script src="public/scripts/angular-plaid-link.js"></script>
+        <script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
+        <script src="public/scripts/routers/angular-plaid-config.js"></script>
         <script src="public/scripts/controllers/logincontroller.js"></script>
+        <script src="public/scripts/services/userdata.js"></script>
     </body>
 </html>
