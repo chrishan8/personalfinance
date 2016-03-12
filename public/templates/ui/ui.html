@@ -19,16 +19,18 @@
         <div flex layout="row">
             <!-- Balance SideNav -->
             <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-                <md-toolbar>
-                    <h1 class="md-toolbar-tools">Cash<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h1>
+                <md-toolbar slide-toggle="#cash">
+                    <h1 class="md-toolbar-tools">Cash<i class="material-icons expand-icon-toggle">expand_less</i></h1>
                 </md-toolbar>
                 <md-list>
-                    <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeCash">
-                        <div class="md-list-item-text">
-                            <h3>{{account.institution_type}}</h3>
-                            <p>${{account.balance.available}}</p>
-                        </div>
-                    </md-list-item>
+                    <div id="cash" class="slideable">
+                        <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeCash">
+                            <div class="md-list-item-text">
+                                <h3>{{account.institution_type}}</h3>
+                                <p>${{account.balance.available}}</p>
+                            </div>
+                        </md-list-item>
+                    </div>
                     <md-divider></md-divider>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
@@ -37,52 +39,56 @@
                         </div>
                     </md-list-item>
                 </md-list>
-                <md-toolbar>
-                    <h1 class="md-toolbar-tools">Accounts<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h1>
+                <md-toolbar slide-toggle="#accounts">
+                    <h1 class="md-toolbar-tools">Accounts<i class="material-icons expand-icon-toggle">expand_less</i></h1>
                 </md-toolbar>
                 <md-list>
-                <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Fixed Expenses</h3>
-                            <p>$0</p>
+                    <div id="accounts" class="slideable">
+                        <md-list-item class="md-2-line">
+                            <div class="md-list-item-text">
+                                <h3>Fixed Expenses</h3>
+                                <p>$0</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line">
+                            <div class="md-list-item-text">
+                                <h3>Investment<i class="material-icons expand-icon-toggle">expand_less</i></h3>
+                                <p>$0</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line">
+                            <div slide-toggle="#savings" class="md-list-item-text">
+                                <h3>Short-Term Savings<i class="material-icons expand-icon-toggle">expand_less</i></h3>
+                                <p>${{calculateTotal('savings')}}</p>
+                            </div>
+                        </md-list-item>
+                        <div id="savings" class="slideable">
+                            <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeSavings">
+                                <div class="md-list-item-text submenu">
+                                    <h3>{{account.institution_type}}</h3>
+                                    <p>${{account.balance.available}}</p>
+                                </div>
+                            </md-list-item>
                         </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Investment<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                            <p>$0</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Short-Term Savings<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                            <p>${{calculateTotal('savings')}}</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeSavings">
-                        <div class="md-list-item-text" style="padding-left:15px">
-                            <h3>{{account.institution_type}}</h3>
-                            <p>${{account.balance.available}}</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Personal Development</h3>
-                            <p>$0</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Personal Spending</h3>
-                            <p>$0</p>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text">
-                            <h3>Retirement<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                            <p>$0</p>
-                        </div>
-                    </md-list-item>
+                        <md-list-item class="md-2-line">
+                            <div class="md-list-item-text">
+                                <h3>Personal Development</h3>
+                                <p>$0</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line">
+                            <div class="md-list-item-text">
+                                <h3>Personal Spending</h3>
+                                <p>$0</p>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-2-line">
+                            <div class="md-list-item-text">
+                                <h3>Retirement<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
+                                <p>$0</p>
+                            </div>
+                        </md-list-item>
+                    </div>
                     <md-divider></md-divider>
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
@@ -135,6 +141,7 @@
         <script src="public/scripts/angular-plaid-link.js"></script>
         <script src="public/scripts/app.js"></script>
         <script src="public/scripts/controllers/uicontrollers.js"></script>
+        <script src="public/scripts/angularSlideables.js"></script>
         <link href="public/stylesheets/ui.css" rel="stylesheet">
     </body>
 </html>
