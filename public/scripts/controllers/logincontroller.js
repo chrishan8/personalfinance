@@ -38,7 +38,10 @@ app.controller('registerController', ['$scope', '$http', 'plaidLink', 'Data', fu
                 url    : '/plaidaccounts',
                 params   : {public_token: $scope.token}
             }).then(function(returnData){
+                console.log(returnData);
                 $scope.signupForm.accounts = returnData.data.accounts;
+                $scope.signupForm.transactions = returnData.data.transactions;
+                $scope.signupForm.access_token = returnData.data.access_token;
                 $http({
                     method : 'POST',
                     url    : '/signup',

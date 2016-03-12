@@ -8,7 +8,9 @@ var registerUser = function(req, res) {
             var newUser = new User.User({
                 username: req.body.username,
                 password: hash,
-                accounts: req.body.accounts
+                accounts: req.body.accounts,
+                transactions: req.body.transactions,
+                access_token: req.body.access_token
             });
             newUser.save(function(saveErr, user){
                 if ( saveErr ) { res.send({ err:saveErr }) }

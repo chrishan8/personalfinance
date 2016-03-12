@@ -26,7 +26,7 @@
                     <div id="cash" class="slideable">
                         <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeCash">
                             <div class="md-list-item-text">
-                                <h3>{{account.institution_type}}</h3>
+                                <h3>{{account.meta.name}}</h3>
                                 <p>${{account.balance.available}}</p>
                             </div>
                         </md-list-item>
@@ -65,7 +65,7 @@
                         <div id="savings" class="slideable">
                             <md-list-item class="md-2-line" ng-repeat="account in userfinancialdata | filter: search.subtypeSavings">
                                 <div class="md-list-item-text submenu">
-                                    <h3>{{account.institution_type}}</h3>
+                                    <h3>{{account.meta.name}}</h3>
                                     <p>${{account.balance.available}}</p>
                                 </div>
                             </md-list-item>
@@ -96,31 +96,42 @@
                             <p>${{calculateTotal('savings')}}</p>
                         </div>
                     </md-list-item>
+                    <md-list-item>
+                        <md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">Edit Transactions</md-button>
+                    </md-list-item>
                 </md-list>
+            </md-sidenav>
+            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+                <md-toolbar class="md-theme-light">
+                    <h1 flex class="md-toolbar-tools">Module Name</h1>
+                </md-toolbar>
+                <md-content layout-padding>
+                    <div ui-view></div>
+                </md-content>
             </md-sidenav>
             <!-- Main Content Wrapper -->
             <div flex layout="column">
                 <!-- Assets Modules -->
                 <md-content flex class="module-groups">
                     <div layout="row" class="modules">
-                        <div class="paperassets-module-img module-selection" flex>Paper Assets</div>
-                        <div class="commodities-module-img module-selection" flex>Commodities</div>
-                        <div class="realestate-module-img module-selection" flex>Real Estate</div>
-                        <div class="entrepreneurial-module-img module-selection" flex>Entrepreneurial</div>
+                        <div ng-click="toggleRight()" class="paperassets-module-img module-selection" flex>Paper Assets</div>
+                        <div ng-click="toggleRight()" class="commodities-module-img module-selection" flex>Commodities</div>
+                        <div ng-click="toggleRight()" class="realestate-module-img module-selection" flex>Real Estate</div>
+                        <div ng-click="toggleRight()" class="entrepreneurial-module-img module-selection" flex>Entrepreneurial</div>
                     </div>
                 </md-content>
                 <md-divider></md-divider>
                 <!-- Liabilities Modules -->
                 <md-content flex class="module-groups">
                     <div layout="row" class="modules">
-                        <div class="personal-module-img module-selection-personal" flex>Personal Spending</div>
-                        <div class="fixed-module-img module-selection-fixed" flex>Fixed Expenses</div>
-                        <div class="home-module-img module-selection-home" flex>Home</div>
+                        <div ng-click="toggleRight()" class="personal-module-img module-selection-personal" flex>Personal Spending</div>
+                        <div ng-click="toggleRight()" class="fixed-module-img module-selection-fixed" flex>Fixed Expenses</div>
+                        <div ng-click="toggleRight()" class="home-module-img module-selection-home" flex>Home</div>
                     </div>
                     <div layout="row" class="modules">
-                        <div class="car-module-img module-selection-car" flex>Car</div>
-                        <div class="business-module-img module-selection-business" flex>Business</div>
-                        <div class="student-module-img module-selection-student" flex>Student</div>
+                        <div ng-click="toggleRight()" class="car-module-img module-selection-car" flex>Car</div>
+                        <div ng-click="toggleRight()" class="business-module-img module-selection-business" flex>Business</div>
+                        <div ng-click="toggleRight()" class="student-module-img module-selection-student" flex>Student</div>
                     </div>
                 </md-content>
             </div>
@@ -141,7 +152,9 @@
         <script src="public/scripts/angular-plaid-link.js"></script>
         <script src="public/scripts/app.js"></script>
         <script src="public/scripts/controllers/uicontrollers.js"></script>
+        <script src="public/scripts/routers/uirouter.js"></script>
         <script src="public/scripts/angularSlideables.js"></script>
+        <script src="public/scripts/services/dashboarduserdata.js"></script>
         <link href="public/stylesheets/ui.css" rel="stylesheet">
     </body>
 </html>

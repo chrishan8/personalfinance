@@ -92,7 +92,6 @@ app.isAuthenticatedAjax = function(req, res, next){
 
 app.get('/plaidaccounts', function(req, res, next) {
   var public_token = req.query.public_token;
-  console.log(req.query);
   plaidClient.exchangeToken(public_token, function(err, tokenResponse) {
     if (err != null) {
     	console.log(err);
@@ -101,15 +100,15 @@ app.get('/plaidaccounts', function(req, res, next) {
       // The exchange was successful - this access_token can now be used to
       // safely pull account and routing numbers or transaction data for the
       // user from the Plaid API using your private client_id and secret.
+      console.log(tokenResponse);
       var access_token = tokenResponse.access_token;
-
-      plaidClient.getAuthUser(access_token, function(err, authResponse) {
+      plaidClient.getConnectUser(access_token, {gte: '30 days ago',}, function(err, connectResponse) {
         if (err != null) {
-          res.json({error: 'Unable to pull accounts from the Plaid API'});
+          res.json({err: 'Unable to pull transactions from the Plaid API'});
         } else {
-          // Return a JSON body containing the user's accounts, which
-          // includes names, balances, and account and routing numbers.
-          res.json({accounts: authResponse.accounts});
+          var accounts = connectResponse.accounts;
+          var transactions = connectResponse.transactions;
+          res.send({accounts: accounts, transactions: transactions, access_token: access_token});
         }
       });
     }

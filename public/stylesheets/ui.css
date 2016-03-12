@@ -16,6 +16,10 @@ md-list, md-list-item {
 	padding:0;
 }
 
+md-backdrop {
+	display:none;
+}
+
 .expand-icon-toggle {
 	position:absolute; 
 	right:20px; 
@@ -24,6 +28,11 @@ md-list, md-list-item {
 
 .submenu {
 	padding-left:25px
+}
+
+.md-sidenav-right {
+	min-width: 100vw !important;
+	margin-left:304px !important;
 }
 
 .module-groups {

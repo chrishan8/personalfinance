@@ -1,6 +1,7 @@
-app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', function($scope, $timeout, $mdSidenav, $log, $http) {
+app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
     // Left Sidenav Configuration
     $scope.toggleLeft = buildDelayedToggler('left');
+    $scope.toggleRight = buildDelayedToggler('right');
 
 	function debounce(func, wait, context) {
         var timer;
@@ -23,11 +24,18 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
         }, 200);
     }
 
-    $scope.close = function () {
+    $scope.closeleft = function () {
       	$mdSidenav('left').close()
         	.then(function () {
           		$log.debug("close LEFT is done");
         	});
+    };
+
+    $scope.closeright = function () {
+      $mdSidenav('right').close()
+        .then(function () {
+          $log.debug("close RIGHT is done");
+        });
     };
 
     // Populate Sidenav with Data
@@ -38,7 +46,9 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
     }).then(function(returnData){
         if ( returnData.data.user ) {
             $scope.user = returnData.data.user;
+            Data.setAccount(returnData.data.user);
             $scope.userfinancialdata = returnData.data.user.accounts;
+            $scope.usertransactionsdata = returnData.data.user.transactions;
         }
     })
 
@@ -58,4 +68,9 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
     }
 }])
 
-
+app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
+    $scope.user = Data.getAccount();
+    $scope.test = function() {
+        console.log($scope.user);
+    }
+}])

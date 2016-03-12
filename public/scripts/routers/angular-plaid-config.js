@@ -1,9 +1,9 @@
 app.config(['plaidLinkProvider', function(plaidLinkProvider) {
     plaidLinkProvider.init({
-        clientName: 'My App',
+        clientName: 'Slate',
         env: 'tartan',
-        key: 'test_key',
-        product: 'auth'
+        key: 'f7cb853e4a261f4587b23b0f1385db',
+        product: 'connect'
         });
     }
 ])
