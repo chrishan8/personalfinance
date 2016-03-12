@@ -21,6 +21,26 @@ app.directive('slideable', function () {
         }
     };
 })
+app.directive('toggle', function() {
+    return {
+        restrict:'C',
+        compile: function (element, attr) {
+            var contents = element.html();
+            element.html('<div class="toggle_content">' + contents + '</div>');
+            var degrees;
+            return function postLink(scope, element, attrs) {
+                attrs.duration = (!attrs.duration) ? '1s' : attrs.duration;
+                attrs.easing = (!attrs.easing) ? 'ease-in-out' : attrs.easing;
+                element.css({
+                    'transform': 'rotate(' + degrees + 'deg)',
+                    'transitionProperty': 'transform',
+                    'transitionDuration': attrs.duration,
+                    'transitionTimingFunction': attrs.easing
+                })
+            }
+        }
+    }
+})
 app.directive('slideToggle', function() {
     return {
         restrict: 'A',
@@ -31,15 +51,17 @@ app.directive('slideToggle', function() {
             
             element.bind('click', function() {
                 if (!target) target = document.querySelector(attrs.slideToggle);
-                if (!content) content = target.querySelector('.slideable_content');
+                if (!content) content = target.querySelector('.slideable_content, .toggle_content');
                 
                 if(!attrs.expanded) {
                     content.style.border = '1px solid rgba(0,0,0,0)';
                     var y = content.clientHeight;
                     content.style.border = 0;
                     target.style.height = y + 'px';
+                    target.style.degrees = 180
                 } else {
                     target.style.height = '0px';
+                    target.style.degrees = 0
                 }
                 attrs.expanded = !attrs.expanded;
             });
