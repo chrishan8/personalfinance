@@ -1,4 +1,4 @@
-.header, .md-toolbar-tools {
+.titleelement {
 	background-color:rgb(50,60,67) !important;
 }
 
@@ -31,8 +31,7 @@ md-backdrop {
 }
 
 .md-sidenav-right {
-	min-width: 100vw !important;
-	margin-left:304px !important;
+	min-width: calc(100vw - 304px) !important;
 }
 
 .module-groups {
@@ -42,6 +41,10 @@ md-backdrop {
 
 .modules {
 	flex: 1;
+}
+
+.module-title {
+	z-index: 3;
 }
 
 .paperassets-module-img {

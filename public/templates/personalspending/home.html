@@ -1,1 +1,43 @@
-<md-button class="md-primary" ng-click="test()">Click Me!</md-button>
+<md-toolbar class="md-whiteframe-1dp module-title">
+    <div class="md-toolbar-tools titleelement">
+        <div class="md-title">Edit Transactions</div>
+    </div>
+</md-toolbar>
+<md-content layout-padding>
+	<md-card>
+		<md-toolbar class="md-table-toolbar md-default" ng-hide="options.rowSelection && selected.length">
+          	<div class="md-toolbar-tools table-title">
+            	<span>Your 30 Day Transactions</span>
+          	</div>
+        </md-toolbar>
+		<md-table-container>
+		  	<table md-table>
+		    	<thead md-head md-order="userTransactions">
+		      		<th md-column md-order-by="date"><span>Date</span></th>
+		      		<th md-column md-order-by="name"><span>Description</span></th>
+		      		<th md-column><span>Category</span></th>
+		      		<th md-column md-numeric><span>Amount</span></th>
+		      		<th md-column hide-gt-xs show-gt-md><span>Location</span></th>
+		      		<th md-column><span>Notes</span></th>
+		    	</thead>
+		    	<tbody md-body>
+		      		<!-- we can let ng-repeat sort the columns for us -->
+		      		<tr ng-repeat="transaction in user.transactions | orderBy: userTransactions | limitTo: query.limit : (query.page -1) * query.limit">
+		    			<td md-cell><p>{{transaction.date}}</p></td>
+		    			<td md-cell><p>{{transaction.name}}</p></td>
+		    			<td md-cell><p>{{transaction.category[0]}}</p></td>
+		    			<td md-cell><p>${{transaction.amount}}</p></td>
+		    			<td md-cell hide-gt-xs show-gt-md><div ng-show="addressRecorded(transaction)"><p>{{transaction.meta.location.address}} {{typeoftransaction.meta.location.city}}, {{transaction.meta.location.state}} {{transaction.meta.location.zip}}</p></td>
+		    			<td md-cell><p></p></td>
+		      		</tr>
+		    	</tbody>
+		  	</table>
+		</md-table-container>
+		<md-table-pagination md-options="query.options" md-limit="query.limit" md-page="query.page" md-total="{{user.transactions.length}}"></md-table-pagination>
+	</md-card>
+</md-content>
+
+
+
+
+

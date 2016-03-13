@@ -7,8 +7,8 @@
     </head>
     <body ng-controller="UICtrl" layout="column" ng-cloak>
         <!-- Navbar -->
-        <md-toolbar layout="row" class="header md-whiteframe-z3">
-            <md-button ng-click="toggleLeft()" class="md-primary cashnavtoggle"></md-button>
+        <md-toolbar layout="row" class="titleelement md-whiteframe-z3">
+            <md-button ng-click="toggleLeft(); closeright()" class="md-primary cashnavtoggle"></md-button>
             <h1>Slate</h1>
             <span flex></span>
             <h1>Home</h1>
@@ -20,7 +20,7 @@
             <!-- Balance SideNav -->
             <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
                 <md-toolbar slide-toggle="#cash">
-                    <h1 class="md-toolbar-tools">Cash<i class="material-icons expand-icon-toggle toggle">expand_less</i></h1>
+                    <h1 class="md-toolbar-tools titleelement">Cash<i class="material-icons expand-icon-toggle toggle">expand_less</i></h1>
                 </md-toolbar>
                 <md-list>
                     <div id="cash" class="slideable">
@@ -40,7 +40,7 @@
                     </md-list-item>
                 </md-list>
                 <md-toolbar slide-toggle="#accounts">
-                    <h1 class="md-toolbar-tools">Accounts<i class="material-icons expand-icon-toggle">expand_less</i></h1>
+                    <h1 class="md-toolbar-tools titleelement">Accounts<i class="material-icons expand-icon-toggle">expand_less</i></h1>
                 </md-toolbar>
                 <md-list>
                     <div id="accounts" class="slideable">
@@ -97,17 +97,14 @@
                         </div>
                     </md-list-item>
                     <md-list-item>
-                        <md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">Edit Transactions</md-button>
+                        <div flex></div>
+                        <div flex><md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">Edit Transactions</md-button></div>
+                        <div flex></div>
                     </md-list-item>
                 </md-list>
             </md-sidenav>
             <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
-                <md-toolbar class="md-theme-light">
-                    <h1 flex class="md-toolbar-tools">Module Name</h1>
-                </md-toolbar>
-                <md-content layout-padding>
-                    <div ui-view></div>
-                </md-content>
+                <div ui-view></div>
             </md-sidenav>
             <!-- Main Content Wrapper -->
             <div flex layout="column">
@@ -144,6 +141,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <!-- Angular Material Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -151,10 +149,13 @@
         <script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
         <script src="public/scripts/angular-plaid-link.js"></script>
         <script src="public/scripts/app.js"></script>
+        <script type="text/javascript" src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
+        <link href="bower_components/angular-material-data-table/dist/md-data-table.css" rel="stylesheet"/>
         <script src="public/scripts/controllers/uicontrollers.js"></script>
         <script src="public/scripts/routers/uirouter.js"></script>
         <script src="public/scripts/angularSlideables.js"></script>
         <script src="public/scripts/services/dashboarduserdata.js"></script>
         <link href="public/stylesheets/ui.css" rel="stylesheet">
+        <link rel="stylesheet" href="public/stylesheets/personalspending.css"/>
     </body>
 </html>

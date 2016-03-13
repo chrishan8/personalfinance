@@ -1,5 +1,5 @@
 app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
-    // Left Sidenav Configuration
+    // Left and Right Sidenav Configurations
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildDelayedToggler('right');
 
@@ -52,11 +52,12 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
         }
     })
 
+    // Filter Through General Account Types to Populate Left Sidenav
     $scope.search = {
         subtypeCash : 'checking',
         subtypeSavings : 'savings'
     };
-
+    // Returns the Total For Each Sidenav Category
     $scope.calculateTotal = function(subtype) {
         var total = 0;
         for (var i = 0; i < $scope.userfinancialdata.length; i++) {
@@ -69,8 +70,29 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
 }])
 
 app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
-    $scope.user = Data.getAccount();
-    $scope.test = function() {
-        console.log($scope.user);
+    // Use User Data to Populate and Edit Transactions Data on the Right Sidenav
+    var user = Data.getAccount();
+
+    // Console Log User Data for Debugging Purposes
+    var test = function() {
+        console.log(user);
     }
+    test();
+    $scope.user = user;
+
+    $scope.addressRecorded = function(transaction) {
+        if (typeof transaction.meta.location.address !== 'undefined') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Pagination Configuration
+    $scope.query = {
+        limit: 10,
+        page: 1,
+        options: [10, 20, 30, 40]
+    };
 }])
