@@ -91,6 +91,8 @@ app.isAuthenticatedAjax = function(req, res, next){
 }
 
 app.get('/plaidaccounts', function(req, res, next) {
+  var date = new Date();
+  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
   var public_token = req.query.public_token;
   plaidClient.exchangeToken(public_token, function(err, tokenResponse) {
     if (err != null) {
@@ -102,7 +104,7 @@ app.get('/plaidaccounts', function(req, res, next) {
       // user from the Plaid API using your private client_id and secret.
       console.log(tokenResponse);
       var access_token = tokenResponse.access_token;
-      plaidClient.getConnectUser(access_token, {gte: '30 days ago',}, function(err, connectResponse) {
+      plaidClient.getConnectUser(access_token, {gte: 'firstDay',}, function(err, connectResponse) {
         if (err != null) {
           res.json({err: 'Unable to pull transactions from the Plaid API'});
         } else {
@@ -114,6 +116,21 @@ app.get('/plaidaccounts', function(req, res, next) {
     }
   });
 });
+
+app.get('/updateaccounts', function(req, res, next) {
+  var date = new Date();
+  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  var public_token = req.query.public_token;
+  plaidClient.getConnectUser(access_token, {gte: 'firstDay',}, function(err, connectResponse) {
+    if (err != null) {
+      res.json({err: 'Unable to pull transactions from the Plaid API'});
+    } else {
+      var accounts = connectResponse.accounts;
+      var transactions = connectResponse.transactions;
+      res.send({accounts: accounts, transactions: transactions, access_token: access_token});
+    }
+  });
+})
 
 app.post('/signup', appCtrl.registerUser);
 app.post('/login', appCtrl.loginUser);

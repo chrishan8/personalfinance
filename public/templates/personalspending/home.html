@@ -1,13 +1,14 @@
 <md-toolbar class="md-whiteframe-1dp module-title">
     <div class="md-toolbar-tools titleelement">
-        <div class="md-title">Edit Transactions</div>
+        <div flex class="md-title">View Transactions</div>
+		<md-button ng-click="closemodule()" class="md-primary">Close Module</md-button>
     </div>
 </md-toolbar>
 <md-content layout-padding>
 	<md-card>
 		<md-toolbar class="md-table-toolbar md-default" ng-hide="options.rowSelection && selected.length">
           	<div class="md-toolbar-tools table-title">
-            	<span>Your 30 Day Transactions</span>
+            	<span>Your New Transactions</span>
           	</div>
         </md-toolbar>
 		<md-table-container>
@@ -22,7 +23,7 @@
 		    	</thead>
 		    	<tbody md-body>
 		      		<!-- we can let ng-repeat sort the columns for us -->
-		      		<tr ng-repeat="transaction in user.transactions | orderBy: userTransactions | limitTo: query.limit : (query.page -1) * query.limit">
+		      		<tr ng-repeat="transaction in transactions | orderBy: userTransactions | limitTo: query.limit : (query.page -1) * query.limit">
 		    			<td md-cell><p>{{transaction.date}}</p></td>
 		    			<td md-cell><p>{{transaction.name}}</p></td>
 		    			<td md-cell><p>{{transaction.category[0]}}</p></td>

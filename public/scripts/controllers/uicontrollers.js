@@ -1,4 +1,8 @@
-app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
+app.run(function($rootScope) {
+    $rootScope.closeright;
+})
+
+app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, Data, $rootScope) {
     // Left and Right Sidenav Configurations
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildDelayedToggler('right');
@@ -38,6 +42,13 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
         });
     };
 
+    $rootScope.closeright = function () {
+        $mdSidenav('right').close()
+            .then(function () {
+                $log.debug("close RIGHT is done");
+            });
+    };
+
     // Populate Sidenav with Data
     $scope.userfinancialdata = [];
     $http({
@@ -69,7 +80,10 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
     }
 }])
 
-app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', function($scope, $timeout, $mdSidenav, $log, $http, Data) {
+app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, Data, $rootScope) {
+    $scope.closemodule = function() {
+        $rootScope.closeright();
+    }
     // Use User Data to Populate and Edit Transactions Data on the Right Sidenav
     var user = Data.getAccount();
 
@@ -78,7 +92,7 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
         console.log(user);
     }
     test();
-    $scope.user = user;
+    $scope.transactions = user.transactions;
 
     $scope.addressRecorded = function(transaction) {
         if (typeof transaction.meta.location.address !== 'undefined') {

@@ -98,7 +98,12 @@
                     </md-list-item>
                     <md-list-item>
                         <div flex></div>
-                        <div flex><md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">Edit Transactions</md-button></div>
+                        <span>You have {{usertransactionsdata.length}} new transactions</span>
+                        <div flex></div>
+                    </md-list-item>
+                    <md-list-item>
+                        <div flex></div>
+                        <div flex><md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">View Transactions</md-button></div>
                         <div flex></div>
                     </md-list-item>
                 </md-list>
