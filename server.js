@@ -6,7 +6,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs')
 var appCtrl = require('./controllers/usercontroller');
-var appModel = require('./models/user');
+var User = require('./models/user');
 var plaid = require('plaid');
 var db = require('mongoose');
 
@@ -38,7 +38,7 @@ passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 passport.deserializeUser(function(id, done) {
-    appModel.User.findById(id, function(err, user) {
+    User.User.findById(id, function(err, user) {
         done(err, user);
     });
 });
@@ -46,7 +46,7 @@ passport.deserializeUser(function(id, done) {
 // Configure B-Crypt
 passport.use(new LocalStrategy(
     function(username, password, done) {
-        appModel.User.findOne({ username: username }, function (err, user) {
+        User.User.findOne({ username: username }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
                 return done(null, false);
@@ -93,7 +93,9 @@ app.isAuthenticatedAjax = function(req, res, next){
 app.get('/plaidaccounts', function(req, res, next) {
   var date = new Date();
   var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  firstDay = firstDay.toLocaleDateString("en-US");
   var public_token = req.query.public_token;
+  var userid = req.query.id;
   plaidClient.exchangeToken(public_token, function(err, tokenResponse) {
     if (err != null) {
     	console.log(err);
@@ -104,30 +106,37 @@ app.get('/plaidaccounts', function(req, res, next) {
       // user from the Plaid API using your private client_id and secret.
       console.log(tokenResponse);
       var access_token = tokenResponse.access_token;
-      plaidClient.getConnectUser(access_token, {gte: 'firstDay',}, function(err, connectResponse) {
+      plaidClient.getConnectUser(access_token, {gte: firstDay,}, function(err, connectResponse) {
         if (err != null) {
           res.json({err: 'Unable to pull transactions from the Plaid API'});
         } else {
+          console.log(connectResponse);
           var accounts = connectResponse.accounts;
           var transactions = connectResponse.transactions;
-          res.send({accounts: accounts, transactions: transactions, access_token: access_token});
+          User.User.findByIdAndUpdate(userid, {$set: {accounts: accounts, transactions: transactions, access_token: access_token}}, function(err, docs) {
+            res.send({message: 'user financial data saved if docs shown', data: docs});
+          })
         }
       });
     }
   });
 });
 
-app.get('/updateaccounts', function(req, res, next) {
+app.get('/api/updateAccounts', function(req, res, next) {
   var date = new Date();
   var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-  var public_token = req.query.public_token;
-  plaidClient.getConnectUser(access_token, {gte: 'firstDay',}, function(err, connectResponse) {
+  firstDay = firstDay.toLocaleDateString("en-US");
+  var userid = req.query.id;
+  var access_token = req.query.access_token;
+  plaidClient.getConnectUser(access_token, {gte: firstDay,}, function(err, connectResponse) {
     if (err != null) {
       res.json({err: 'Unable to pull transactions from the Plaid API'});
     } else {
       var accounts = connectResponse.accounts;
       var transactions = connectResponse.transactions;
-      res.send({accounts: accounts, transactions: transactions, access_token: access_token});
+      User.User.findByIdAndUpdate(userid, {$set: {accounts: accounts, transactions: transactions, access_token: access_token}}, function(err, docs) {
+        res.send({message: 'user financial data saved if docs shown', data: docs});
+      })
     }
   });
 })

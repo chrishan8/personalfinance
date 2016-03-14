@@ -56,6 +56,7 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
         url    : '/api/me',
     }).then(function(returnData){
         if ( returnData.data.user ) {
+            console.log(returnData.data.user);
             $scope.user = returnData.data.user;
             Data.setAccount(returnData.data.user);
             $scope.userfinancialdata = returnData.data.user.accounts;
@@ -77,6 +78,41 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
             }
         }
         return total;
+    }
+
+    $scope.updateAccounts = function() {
+        if ($scope.user.access_token == '' || typeof $scope.user.access_token == 'undefined') {
+            $scope.token = '';
+            $scope.plaidIsLoaded = plaidLink.isLoaded;
+            plaidLink.create({
+                onSuccess: function(token) {
+                    $scope.token = token;
+                    $http({
+                        method : 'GET',
+                        url    : '/plaidaccounts',
+                        params   : {public_token: $scope.token, id: $scope.user._id}
+                    }).then(function(returnData){
+                        console.log(returnData);
+                    })
+                },
+                onExit: function() {
+                    console.log('user closed');
+                }
+            });
+            $scope.openPlaid = function(bankType) {
+                plaidLink.open(bankType);
+            };
+            $scope.openPlaid();
+        }
+        else {
+            $http({
+            method : 'GET',
+            url    : '/api/updateAccounts',
+            params : {id: $scope.user._id, access_token: $scope.user.access_token}
+            }).then(function(returnData){
+                console.log(returnData);
+            })
+        }
     }
 }])
 

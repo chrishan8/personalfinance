@@ -5,7 +5,7 @@ var userSchema = db.Schema({
     password: { type: String, required: true },
     accounts: { type: Array, required: false },
     transactions: {type : Array, required: false},
-    access_token: {type: String, required: true}
+    access_token: {type: String, required: false}
 });
 
 var User = db.model('user', userSchema);

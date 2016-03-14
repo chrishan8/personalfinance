@@ -6,9 +6,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'public/templates/signup/landingpage.html',
             controller: 'loginController'
         })
-        .state('register', {
-            url: '/register',
-            templateUrl: 'public/templates/signup/registerpage.html',
-            controller: 'registerController'
-        })
     })

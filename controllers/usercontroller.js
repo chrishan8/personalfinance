@@ -7,21 +7,18 @@ var registerUser = function(req, res) {
         bcrypt.hash(req.body.password, salt, function(hashError, hash){
             var newUser = new User.User({
                 username: req.body.username,
-                password: hash,
-                accounts: req.body.accounts,
-                transactions: req.body.transactions,
-                access_token: req.body.access_token
+                password: hash
             });
             newUser.save(function(saveErr, user){
+                console.log(newUser);
                 if ( saveErr ) { res.send({ err:saveErr }) }
                 else {
                     req.login(user, function(loginErr){
                         if ( loginErr ) { res.send({ err:loginErr }) }
-                        else { res.send({success: 'success'}) }
+                        else { res.send({success: true, id: newUser._id}) }
                     })
                 }
             })
-
         })
     })
 }

@@ -1,14 +1,5 @@
 app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', function($scope, $http, plaidLink, Data){
-    $http({
-        method : 'GET',
-        url    : '/api/me',
-    }).then(function(returnData){
-        console.log(returnData)
-        if ( returnData.data.user ) {
-            $scope.user = returnData.data.user
-        }
-    })     
-
+    
     $scope.login = function(){
         $http({
             method : 'POST',
@@ -21,13 +12,17 @@ app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', funct
     }
 
     $scope.register = function() {
-        Data.setAccount($scope.signupForm);
+        console.log($scope.signupForm);
+        $http({
+            method : 'POST',
+            url    : '/signup',
+            data   : $scope.signupForm
+        }).then(function(returnData){
+            console.log(returnData);
+            $scope.userid = returnData.data.id;
+        })
     }
-}])
 
-app.controller('registerController', ['$scope', '$http', 'plaidLink', 'Data', function($scope, $http, plaidLink, Data){
-    $scope.signupForm = Data.getAccount();
-    console.log($scope.signupForm);
     $scope.token = '';
     $scope.plaidIsLoaded = plaidLink.isLoaded;
     plaidLink.create({
@@ -36,19 +31,10 @@ app.controller('registerController', ['$scope', '$http', 'plaidLink', 'Data', fu
             $http({
                 method : 'GET',
                 url    : '/plaidaccounts',
-                params   : {public_token: $scope.token}
+                params   : {public_token: $scope.token, id: $scope.userid}
             }).then(function(returnData){
+                // window.location.href="/dashboard";
                 console.log(returnData);
-                $scope.signupForm.accounts = returnData.data.accounts;
-                $scope.signupForm.transactions = returnData.data.transactions;
-                $scope.signupForm.access_token = returnData.data.access_token;
-                $http({
-                    method : 'POST',
-                    url    : '/signup',
-                    data   : $scope.signupForm
-                }).then(function(returnData){
-                    if ( returnData.data.success ) { window.location.href="/dashboard" }
-                })
             })
         },
         onExit: function() {
@@ -59,7 +45,7 @@ app.controller('registerController', ['$scope', '$http', 'plaidLink', 'Data', fu
         plaidLink.open(bankType);
     };
 
-    angular.element(document).ready(function () {
+    $scope.registerPlaid = function () {
         $scope.openPlaid();
-    });
+    };
 }])
