@@ -198,4 +198,40 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
             })
         })
     }
+
+    var calculateAccountsTotal = function() {
+        $http({
+                method : 'GET',
+                url    : '/api/me',
+            }).then(function(returnData){
+                if ( returnData.data.user ) {
+                    $scope.user = returnData.data.user;
+                    var total = {fixed: 0, invest: 0, short: 0, develop: 0, spend: 0, retire: 0};
+                    var calculate = function() {
+                        for (var i = 0; i < $scope.user.slateAccounts.fixed_expenses.transactions.length; i++) {
+                            total.fixed += $scope.user.slateAccounts.fixed_expenses.transactions[i].amount;
+                        }
+                        for (var i = 0; i < $scope.user.slateAccounts.investment.transactions.length; i++) {
+                            total.invest += $scope.user.slateAccounts.investment.transactions[i].amount;
+                        }
+                        for (var i = 0; i < $scope.user.slateAccounts.short_term_savings.transactions.length; i++) {
+                            total.invest += $scope.user.slateAccounts.short_term_savings.transactions[i].amount;
+                        }
+                        for (var i = 0; i < $scope.user.slateAccounts.personal_development.transactions.length; i++) {
+                            total.develop += $scope.user.slateAccounts.personal_development.transactions[i].amount;
+                        }
+                        for (var i = 0; i < $scope.user.slateAccounts.personal_spending.transactions.length; i++) {
+                            total.spend += $scope.user.slateAccounts.personal_spending.transactions[i].amount;
+                        }
+                        for (var i = 0; i < $scope.user.slateAccounts.retirement.transactions.length; i++) {
+                            total.retire += $scope.user.slateAccounts.retirement.transactions[i].amount;
+                        }
+                        return total;
+                    }
+                }
+                $scope.AccountsTotal = calculate();
+                console.log($scope.AccountsTotal)
+            })
+    }
+    calculateAccountsTotal();
 }])

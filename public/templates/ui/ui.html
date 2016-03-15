@@ -44,22 +44,25 @@
                 </md-toolbar>
                 <md-list>
                     <div id="accounts" class="slideable">
-                        <md-list-item class="md-2-line">
+                        <md-list-item class="md-3-line">
                             <div class="md-list-item-text">
                                 <h3>Fixed Expenses</h3>
                                 <p>${{slider.fixed}}</p>
+                                <md-progress-linear md-mode="determinate" value="{{AccountsTotal.fixed/slider.fixed*100}}"></md-progress-linear>
                             </div>
                         </md-list-item>
-                        <md-list-item class="md-2-line">
+                        <md-list-item class="md-3-line">
                             <div class="md-list-item-text">
-                                <h3>Investment<i class="material-icons expand-icon-toggle">expand_less</i></h3>
+                                <h3>Investment</h3>
                                 <p>${{slider.invest}}</p>
+                                <md-progress-linear md-mode="determinate" value="{{AccountsTotal.invest/slider.invest*100}}"></md-progress-linear>
                             </div>
                         </md-list-item>
-                        <md-list-item class="md-2-line">
+                        <md-list-item class="md-3-line">
                             <div slide-toggle="#savings" class="md-list-item-text">
-                                <h3>Short-Term Savings<i class="material-icons expand-icon-toggle">expand_less</i></h3>
+                                <h3>Short-Term Savings</h3>
                                 <p>${{calculateTotal('savings') + slider.short}}</p>
+                                <md-progress-linear md-mode="determinate" value="{{AccountsTotal.short/(calculateTotal('savings') + slider.short)*100}}"></md-progress-linear>
                             </div>
                         </md-list-item>
                         <div id="savings" class="slideable">
@@ -70,22 +73,25 @@
                                 </div>
                             </md-list-item>
                         </div>
-                        <md-list-item class="md-2-line">
+                        <md-list-item class="md-3-line">
                             <div class="md-list-item-text">
                                 <h3>Personal Development</h3>
                                 <p>${{slider.develop}}</p>
+                                <md-progress-linear md-mode="determinate" value="{{AccountsTotal.develop/slider.develop*100}}"></md-progress-linear>
                             </div>
                         </md-list-item>
-                        <md-list-item class="md-2-line">
+                        <md-list-item class="md-3-line">
                             <div class="md-list-item-text">
                                 <h3>Personal Spending</h3>
                                 <p>${{slider.spend}}</p>
+                                <md-progress-linear md-mode="determinate" value="{{AccountsTotal.spend/slider.spend*100}}"></md-progress-linear>
                             </div>
                         </md-list-item>
-                        <md-list-item class="md-2-line">
+                        <md-list-item class="md-3-line">
                             <div class="md-list-item-text">
-                                <h3>Retirement<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
+                                <h3>Retirement</h3>
                                 <p>${{slider.retire}}</p>
+                                <md-progress-linear md-mode="determinate" value="{{AccountsTotal.retire/slider.retire*100}}"></md-progress-linear>
                             </div>
                         </md-list-item>
                     </div>
