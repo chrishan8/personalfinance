@@ -3,5 +3,6 @@ var app = angular.module('financeapp', [
 	'angular-plaid-link',
 	'ui.router',
 	'md.data.table',
-	'ngAria'
+	'ngAria',
+	'rzModule'
 ])

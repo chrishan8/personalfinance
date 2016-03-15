@@ -1,8 +1,4 @@
-app.run(function($rootScope) {
-    $rootScope.closeright;
-})
-
-app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, Data, $rootScope) {
+app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', function($scope, $timeout, $mdSidenav, $log, $http) {
     // Left and Right Sidenav Configurations
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildDelayedToggler('right');
@@ -42,27 +38,30 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
         });
     };
 
-    $rootScope.closeright = function () {
-        $mdSidenav('right').close()
-            .then(function () {
-                $log.debug("close RIGHT is done");
-            });
-    };
-
     // Populate Sidenav with Data
     $scope.userfinancialdata = [];
-    $http({
-        method : 'GET',
-        url    : '/api/me',
-    }).then(function(returnData){
-        if ( returnData.data.user ) {
-            console.log(returnData.data.user);
-            $scope.user = returnData.data.user;
-            Data.setAccount(returnData.data.user);
-            $scope.userfinancialdata = returnData.data.user.accounts;
-            $scope.usertransactionsdata = returnData.data.user.transactions;
-        }
-    })
+    var getprofile = function() {
+        $http({
+            method : 'GET',
+            url    : '/api/me',
+        }).then(function(returnData){
+            if ( returnData.data.user ) {
+                console.log(returnData.data.user);
+                $scope.user = returnData.data.user;
+                $scope.userfinancialdata = returnData.data.user.accounts;
+                $scope.usertransactionsdata = returnData.data.user.transactions;
+                $scope.slider = {
+                    fixed: $scope.user.slateAccounts.fixed_expenses.budget,
+                    invest: $scope.user.slateAccounts.investment.budget,
+                    short: $scope.user.slateAccounts.short_term_savings.budget,
+                    develop: $scope.user.slateAccounts.personal_development.budget,
+                    spend: $scope.user.slateAccounts.personal_spending.budget,
+                    retire: $scope.user.slateAccounts.retirement.budget
+                }
+            }
+        })
+    }
+    getprofile();
 
     // Filter Through General Account Types to Populate Left Sidenav
     $scope.search = {
@@ -72,6 +71,7 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
     // Returns the Total For Each Sidenav Category
     $scope.calculateTotal = function(subtype) {
         var total = 0;
+        var check = 'checking'
         for (var i = 0; i < $scope.userfinancialdata.length; i++) {
             if ($scope.userfinancialdata[i].subtype == subtype) {
                 total += $scope.userfinancialdata[i].balance.available;
@@ -99,7 +99,6 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
                             if ( returnData.data.user ) {
                                 console.log(returnData.data.user);
                                 $scope.user = returnData.data.user;
-                                Data.setAccount(returnData.data.user);
                                 $scope.userfinancialdata = returnData.data.user.accounts;
                                 $scope.usertransactionsdata = returnData.data.user.transactions;
                             }
@@ -128,7 +127,6 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
                     if ( returnData.data.user ) {
                         console.log(returnData.data.user);
                         $scope.user = returnData.data.user;
-                        Data.setAccount(returnData.data.user);
                         $scope.userfinancialdata = returnData.data.user.accounts;
                         $scope.usertransactionsdata = returnData.data.user.transactions;
                     }
@@ -136,22 +134,10 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
             })
         }
     }
-}])
 
-app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', 'Data', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, Data, $rootScope) {
-    $scope.closemodule = function() {
-        $rootScope.closeright();
-    }
-    // Use User Data to Populate and Edit Transactions Data on the Right Sidenav
-    var user = Data.getAccount();
+    // Control For Budgetting Funds 
+    
 
-    // Console Log User Data for Debugging Purposes
-    var test = function() {
-        console.log(user);
-    }
-    test();
-    $scope.transactions = user.transactions;
-    console.log(user.transactions);
 
     $scope.addressRecorded = function(transaction) {
         if (typeof transaction.meta.location.address !== 'undefined') {
@@ -181,8 +167,15 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
         return types;
     }
 
-    $scope.debug = function() {
-        console.log($scope.transactions);
+    $scope.fundbudget = function() {
+        console.log($scope.slider);
+        $http({
+            method : 'POST',
+            url    : '/api/fundbudget',
+            data   : [$scope.slider , {id: $scope.user._id}]
+        }).then(function(returnData){
+            console.log(returnData.data);
+        })
     }
 
     $scope.categorizetransaction = function(transaction) {
@@ -190,7 +183,7 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
         $http({
             method : 'POST',
             url    : '/api/categorizetransaction',
-            data   : [transaction, {id: user._id}]
+            data   : [transaction, {id: $scope.user._id}]
         }).then(function(returnData){
             $http({
                 method : 'GET',
@@ -199,7 +192,8 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
                 if ( returnData.data.user ) {
                     console.log(returnData.data.user);
                     $scope.user = returnData.data.user;
-                    Data.setAccount(returnData.data.user);
+                    $scope.userfinancialdata = returnData.data.user.accounts;
+                    $scope.usertransactionsdata = returnData.data.user.transactions;
                 }
             })
         })

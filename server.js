@@ -156,14 +156,6 @@ app.get('/api/updateAccounts', function(req, res, next) {
 
 app.post('/api/categorizetransaction', function(req, res) {
   if (req.body[0].slateAccount === 'Fixed Expenses') {
-    // User.User.findById(req.body[1].id, function (err, doc) {
-    //   console.log(doc.slateAccounts.fixed_expenses);
-    //   doc.slateAccounts.fixed_expenses.transactions.push(req.body[0]);
-    //   doc.transactions.pull({ _id: req.body[0]._id});
-    //   doc.markModified('slateAccounts');
-    //   doc.save();
-    //   res.send(doc);
-    // });
     User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.fixed_expenses.transactions": req.body[0]}}, function(err, doc) {
       console.log(err);
     })
@@ -173,53 +165,66 @@ app.post('/api/categorizetransaction', function(req, res) {
     res.send('transaction categorized');
   }
   else if (req.body[0].slateAccount === 'Investment') {
-    User.User.findById(req.body[1].id, function (err, doc) {
-      doc.slateAccounts.investment.transactions.push(req.body[0]);
-      doc.transactions.pull({ _id: req.body[0]._id});
-      doc.markModified('slateAccounts');
-      doc.save();
-      res.send(doc);
-    });
+    User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.investment.transactions": req.body[0]}}, function(err, doc) {
+      console.log(err);
+    })
+    User.User.findByIdAndUpdate(req.body[1].id, {$pull: {"transactions": {_id: req.body[0]._id}}}, function(err, doc) {
+      console.log(err);
+    })
+    res.send('transaction categorized');
   }
-  else if (req.body[0].slateAccount ==='Short-Term Savings') {
-    User.User.findById(req.body[1].id, function (err, doc) {
-      doc.slateAccounts.short_term_savings.transactions.push(req.body[0]);
-      doc.transactions.pull({ _id: req.body[0]._id});
-      doc.markModified('slateAccounts');
-      doc.save();
-      res.send(doc);
-    });
+  else if (req.body[0].slateAccount === 'Short-Term Savings') {
+    User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.short_term_savings.transactions": req.body[0]}}, function(err, doc) {
+      console.log(err);
+    })
+    User.User.findByIdAndUpdate(req.body[1].id, {$pull: {"transactions": {_id: req.body[0]._id}}}, function(err, doc) {
+      console.log(err);
+    })
+    res.send('transaction categorized');
   }
   else if (req.body[0].slateAccount === 'Personal Development') {
-    User.User.findById(req.body[1].id, function (err, doc) {
-      doc.slateAccounts.personal_development.transactions.push(req.body[0]);
-      doc.transactions.pull({ _id: req.body[0]._id});
-      doc.markModified('slateAccounts');
-      doc.save();
-      res.send(doc);
-    });
+    User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.personal_development.transactions": req.body[0]}}, function(err, doc) {
+      console.log(err);
+    })
+    User.User.findByIdAndUpdate(req.body[1].id, {$pull: {"transactions": {_id: req.body[0]._id}}}, function(err, doc) {
+      console.log(err);
+    })
+    res.send('transaction categorized');
   }
   else if (req.body[0].slateAccount === 'Personal Spending') {
-    User.User.findById(req.body[1].id, function (err, doc) {
-      doc.slateAccounts.personal_spending.transactions.push(req.body[0]);
-      doc.transactions.pull({ _id: req.body[0]._id});
-      doc.markModified('slateAccounts');
-      doc.save();
-      res.send(doc);
-    });
+    User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.personal_spending.transactions": req.body[0]}}, function(err, doc) {
+      console.log(err);
+    })
+    User.User.findByIdAndUpdate(req.body[1].id, {$pull: {"transactions": {_id: req.body[0]._id}}}, function(err, doc) {
+      console.log(err);
+    })
+    res.send('transaction categorized');
   }
   else if (req.body[0].slateAccount === 'Retirement') {
-    User.User.findById(req.body[1].id, function (err, doc) {
-      doc.slateAccounts.retirement.transactions.push(req.body[0]);
-      doc.transactions.pull({ _id: req.body[0]._id});
-      doc.markModified('slateAccounts');
-      doc.save();
-      res.send(doc);
-    });
+    User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.retirement.transactions": req.body[0]}}, function(err, doc) {
+      console.log(err);
+    })
+    User.User.findByIdAndUpdate(req.body[1].id, {$pull: {"transactions": {_id: req.body[0]._id}}}, function(err, doc) {
+      console.log(err);
+    })
+    res.send('transaction categorized');
   }
   else {
     res.send({err: 'error categorizing'});
   }
+})
+
+app.post('/api/fundbudget', function(req, res) {
+  User.User.findByIdAndUpdate(req.body[1].id, {$set: {
+    "slateAccounts.fixed_expenses.budget" : req.body[0].fixed,
+    "slateAccounts.investment.budget" : req.body[0].invest,
+    "slateAccounts.short_term_savings.budget" : req.body[0].short,
+    "slateAccounts.personal_development.budget" : req.body[0].develop,
+    "slateAccounts.personal_spending.budget" : req.body[0].spend,
+    "slateAccounts.retirement.budget" : req.body[0].retire
+  }}, function(err, doc) {
+    res.send('budget saved');
+  })
 })
 
 app.post('/signup', appCtrl.registerUser);

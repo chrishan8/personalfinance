@@ -5,3 +5,11 @@ md-content {
 .table-title {
 	background: white !important;
 }
+
+.cardcontentcontainer {
+	padding:15px;
+}
+
+.sliderinput {
+	float:right;
+}

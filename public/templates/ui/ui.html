@@ -47,19 +47,19 @@
                         <md-list-item class="md-2-line">
                             <div class="md-list-item-text">
                                 <h3>Fixed Expenses</h3>
-                                <p>$0</p>
+                                <p>${{slider.fixed}}</p>
                             </div>
                         </md-list-item>
                         <md-list-item class="md-2-line">
                             <div class="md-list-item-text">
                                 <h3>Investment<i class="material-icons expand-icon-toggle">expand_less</i></h3>
-                                <p>$0</p>
+                                <p>${{slider.invest}}</p>
                             </div>
                         </md-list-item>
                         <md-list-item class="md-2-line">
                             <div slide-toggle="#savings" class="md-list-item-text">
                                 <h3>Short-Term Savings<i class="material-icons expand-icon-toggle">expand_less</i></h3>
-                                <p>${{calculateTotal('savings')}}</p>
+                                <p>${{calculateTotal('savings') + slider.short}}</p>
                             </div>
                         </md-list-item>
                         <div id="savings" class="slideable">
@@ -73,19 +73,19 @@
                         <md-list-item class="md-2-line">
                             <div class="md-list-item-text">
                                 <h3>Personal Development</h3>
-                                <p>$0</p>
+                                <p>${{slider.develop}}</p>
                             </div>
                         </md-list-item>
                         <md-list-item class="md-2-line">
                             <div class="md-list-item-text">
                                 <h3>Personal Spending</h3>
-                                <p>$0</p>
+                                <p>${{slider.spend}}</p>
                             </div>
                         </md-list-item>
                         <md-list-item class="md-2-line">
                             <div class="md-list-item-text">
                                 <h3>Retirement<i class="material-icons" style="position:absolute; right:20px; top:20px">expand_less</i></h3>
-                                <p>$0</p>
+                                <p>${{slider.retire}}</p>
                             </div>
                         </md-list-item>
                     </div>
@@ -93,7 +93,7 @@
                     <md-list-item class="md-2-line">
                         <div class="md-list-item-text">
                             <h3>Total</h3>
-                            <p>${{calculateTotal('savings')}}</p>
+                            <p>${{calculateTotal('savings') + slider.fixed + slider.invest + slider.short + slider.develop + slider.spend + slider.retire}}</p>
                         </div>
                     </md-list-item>
                     <md-list-item>
@@ -103,7 +103,7 @@
                     </md-list-item>
                     <md-list-item>
                         <div flex></div>
-                        <div flex><md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">View Transactions</md-button></div>
+                        <div flex><md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">Budget Funds</md-button></div>
                         <div flex></div>
                     </md-list-item>
                     <md-list-item>
@@ -159,14 +159,15 @@
         <script src="public/scripts/app.js"></script>
         <script src="public/scripts/angular-plaid-link.js"></script>
         <script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
-        <script src="public/scripts/routers/angular-plaid-config.js"></script>
+        <script src="public/scripts/routers/angular-plaid-config-ui.js"></script>
         <script type="text/javascript" src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
         <link href="bower_components/angular-material-data-table/dist/md-data-table.css" rel="stylesheet"/>
         <script src="public/scripts/controllers/uicontrollers.js"></script>
         <script src="public/scripts/routers/uirouter.js"></script>
         <script src="public/scripts/angularSlideables.js"></script>
-        <script src="public/scripts/services/dashboarduserdata.js"></script>
         <link href="public/stylesheets/ui.css" rel="stylesheet">
         <link rel="stylesheet" href="public/stylesheets/personalspending.css"/>
+        <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
+        <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css"/>
     </body>
 </html>

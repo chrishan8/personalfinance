@@ -1,4 +1,4 @@
-app.config(function($stateProvider, $urlRouterProvider) {
+login.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     $stateProvider
         .state('landing', {

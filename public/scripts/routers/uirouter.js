@@ -4,6 +4,5 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('personalspending', {
             url: '/personalspending',
             templateUrl: 'public/templates/personalspending/home.html',
-            controller: 'personalCtrl'
         })
     })

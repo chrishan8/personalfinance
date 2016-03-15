@@ -22,7 +22,7 @@ var userSchema = db.Schema({
     access_token: {type: String, required: false},
     last_updated: {type: String, required: false},
     slateAccounts: slateAccountsSchema
-});
+}, { minimize: false });
 
 var User = db.model('user', userSchema);
 
