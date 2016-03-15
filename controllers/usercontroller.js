@@ -7,7 +7,33 @@ var registerUser = function(req, res) {
         bcrypt.hash(req.body.password, salt, function(hashError, hash){
             var newUser = new User.User({
                 username: req.body.username,
-                password: hash
+                password: hash,
+                slateAccounts: {
+                    fixed_expenses: {
+                        transactions : [],
+                        budget: 0
+                    },
+                    investment: {
+                        transactions : [],
+                        budget: 0
+                    },
+                    short_term_savings: {
+                        transactions : [],
+                        budget: 0
+                    },
+                    personal_development: {
+                        transactions : [],
+                        budget: 0
+                    },
+                    personal_spending: {
+                        transactions : [],
+                        budget: 0
+                    },
+                    retirement: {
+                        transactions : [],
+                        budget: 0
+                    }
+                },
             });
             newUser.save(function(saveErr, user){
                 console.log(newUser);

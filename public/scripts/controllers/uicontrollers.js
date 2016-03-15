@@ -92,7 +92,18 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
                         url    : '/plaidaccounts',
                         params   : {public_token: $scope.token, id: $scope.user._id}
                     }).then(function(returnData){
-                        console.log(returnData);
+                        $http({
+                            method : 'GET',
+                            url    : '/api/me',
+                        }).then(function(returnData){
+                            if ( returnData.data.user ) {
+                                console.log(returnData.data.user);
+                                $scope.user = returnData.data.user;
+                                Data.setAccount(returnData.data.user);
+                                $scope.userfinancialdata = returnData.data.user.accounts;
+                                $scope.usertransactionsdata = returnData.data.user.transactions;
+                            }
+                        })
                     })
                 },
                 onExit: function() {
@@ -110,7 +121,18 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
             url    : '/api/updateAccounts',
             params : {id: $scope.user._id, access_token: $scope.user.access_token}
             }).then(function(returnData){
-                console.log(returnData);
+                $http({
+                    method : 'GET',
+                    url    : '/api/me',
+                }).then(function(returnData){
+                    if ( returnData.data.user ) {
+                        console.log(returnData.data.user);
+                        $scope.user = returnData.data.user;
+                        Data.setAccount(returnData.data.user);
+                        $scope.userfinancialdata = returnData.data.user.accounts;
+                        $scope.usertransactionsdata = returnData.data.user.transactions;
+                    }
+                })
             })
         }
     }
@@ -129,6 +151,7 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
     }
     test();
     $scope.transactions = user.transactions;
+    console.log(user.transactions);
 
     $scope.addressRecorded = function(transaction) {
         if (typeof transaction.meta.location.address !== 'undefined') {
@@ -145,4 +168,40 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
         page: 1,
         options: [10, 20, 30, 40]
     };
+
+    $scope.getTypes = function() {
+        var types = [
+            'Fixed Expenses',
+            'Investment',
+            'Short-Term Savings',
+            'Personal Development',
+            'Personal Spending',
+            'Retirement'
+        ]
+        return types;
+    }
+
+    $scope.debug = function() {
+        console.log($scope.transactions);
+    }
+
+    $scope.categorizetransaction = function(transaction) {
+        console.log(transaction);
+        $http({
+            method : 'POST',
+            url    : '/api/categorizetransaction',
+            data   : [transaction, {id: user._id}]
+        }).then(function(returnData){
+            $http({
+                method : 'GET',
+                url    : '/api/me',
+            }).then(function(returnData){
+                if ( returnData.data.user ) {
+                    console.log(returnData.data.user);
+                    $scope.user = returnData.data.user;
+                    Data.setAccount(returnData.data.user);
+                }
+            })
+        })
+    }
 }])

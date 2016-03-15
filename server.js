@@ -89,11 +89,13 @@ app.isAuthenticatedAjax = function(req, res, next){
     // If not, redirect to login
     res.send({error:'not logged in'});
 }
-
+//Possible bug in plaidaccounts route
 app.get('/plaidaccounts', function(req, res, next) {
   var date = new Date();
   var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  var currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   firstDay = firstDay.toLocaleDateString("en-US");
+  currentDate = currentDate.toLocaleDateString("en-US");
   var public_token = req.query.public_token;
   var userid = req.query.id;
   plaidClient.exchangeToken(public_token, function(err, tokenResponse) {
@@ -113,7 +115,7 @@ app.get('/plaidaccounts', function(req, res, next) {
           console.log(connectResponse);
           var accounts = connectResponse.accounts;
           var transactions = connectResponse.transactions;
-          User.User.findByIdAndUpdate(userid, {$set: {accounts: accounts, transactions: transactions, access_token: access_token}}, function(err, docs) {
+          User.User.findByIdAndUpdate(userid, {$set: {accounts: accounts, transactions: transactions, access_token: access_token, last_updated: currentDate}}, function(err, docs) {
             res.send({message: 'user financial data saved if docs shown', data: docs});
           })
         }
@@ -124,21 +126,100 @@ app.get('/plaidaccounts', function(req, res, next) {
 
 app.get('/api/updateAccounts', function(req, res, next) {
   var date = new Date();
-  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-  firstDay = firstDay.toLocaleDateString("en-US");
+  var currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   var userid = req.query.id;
   var access_token = req.query.access_token;
-  plaidClient.getConnectUser(access_token, {gte: firstDay,}, function(err, connectResponse) {
-    if (err != null) {
-      res.json({err: 'Unable to pull transactions from the Plaid API'});
+  currentDate = currentDate.toLocaleDateString("en-US");
+  console.log(currentDate);
+  var last_updated;
+  User.User.findById(userid, function (err, User) {
+    last_updated = User.last_updated;
+  })
+  .then(function() {
+    if (currentDate !== last_updated) {
+      plaidClient.getConnectUser(access_token, {gte: last_updated, lte: currentDate}, function(err, connectResponse) {
+        if (err != null) {
+          res.json({err: 'Unable to pull transactions from the Plaid API'});
+        } else {
+          var accounts = connectResponse.accounts;
+          var transactions = connectResponse.transactions;
+          User.User.findByIdAndUpdate(userid, {$set: {accounts: accounts, transactions: transactions, last_updated: currentDate}}, function(err, docs) {
+            res.send({message: 'user financial data saved if docs shown', data: docs});
+          })
+        }
+      });
     } else {
-      var accounts = connectResponse.accounts;
-      var transactions = connectResponse.transactions;
-      User.User.findByIdAndUpdate(userid, {$set: {accounts: accounts, transactions: transactions, access_token: access_token}}, function(err, docs) {
-        res.send({message: 'user financial data saved if docs shown', data: docs});
-      })
+      res.send('Account is already up to date');
     }
-  });
+  })
+}) 
+
+app.post('/api/categorizetransaction', function(req, res) {
+  if (req.body[0].slateAccount === 'Fixed Expenses') {
+    // User.User.findById(req.body[1].id, function (err, doc) {
+    //   console.log(doc.slateAccounts.fixed_expenses);
+    //   doc.slateAccounts.fixed_expenses.transactions.push(req.body[0]);
+    //   doc.transactions.pull({ _id: req.body[0]._id});
+    //   doc.markModified('slateAccounts');
+    //   doc.save();
+    //   res.send(doc);
+    // });
+    User.User.findByIdAndUpdate(req.body[1].id, {$push: {"slateAccounts.fixed_expenses.transactions": req.body[0]}}, function(err, doc) {
+      console.log(err);
+    })
+    User.User.findByIdAndUpdate(req.body[1].id, {$pull: {"transactions": {_id: req.body[0]._id}}}, function(err, doc) {
+      console.log(err);
+    })
+    res.send('transaction categorized');
+  }
+  else if (req.body[0].slateAccount === 'Investment') {
+    User.User.findById(req.body[1].id, function (err, doc) {
+      doc.slateAccounts.investment.transactions.push(req.body[0]);
+      doc.transactions.pull({ _id: req.body[0]._id});
+      doc.markModified('slateAccounts');
+      doc.save();
+      res.send(doc);
+    });
+  }
+  else if (req.body[0].slateAccount ==='Short-Term Savings') {
+    User.User.findById(req.body[1].id, function (err, doc) {
+      doc.slateAccounts.short_term_savings.transactions.push(req.body[0]);
+      doc.transactions.pull({ _id: req.body[0]._id});
+      doc.markModified('slateAccounts');
+      doc.save();
+      res.send(doc);
+    });
+  }
+  else if (req.body[0].slateAccount === 'Personal Development') {
+    User.User.findById(req.body[1].id, function (err, doc) {
+      doc.slateAccounts.personal_development.transactions.push(req.body[0]);
+      doc.transactions.pull({ _id: req.body[0]._id});
+      doc.markModified('slateAccounts');
+      doc.save();
+      res.send(doc);
+    });
+  }
+  else if (req.body[0].slateAccount === 'Personal Spending') {
+    User.User.findById(req.body[1].id, function (err, doc) {
+      doc.slateAccounts.personal_spending.transactions.push(req.body[0]);
+      doc.transactions.pull({ _id: req.body[0]._id});
+      doc.markModified('slateAccounts');
+      doc.save();
+      res.send(doc);
+    });
+  }
+  else if (req.body[0].slateAccount === 'Retirement') {
+    User.User.findById(req.body[1].id, function (err, doc) {
+      doc.slateAccounts.retirement.transactions.push(req.body[0]);
+      doc.transactions.pull({ _id: req.body[0]._id});
+      doc.markModified('slateAccounts');
+      doc.save();
+      res.send(doc);
+    });
+  }
+  else {
+    res.send({err: 'error categorizing'});
+  }
 })
 
 app.post('/signup', appCtrl.registerUser);

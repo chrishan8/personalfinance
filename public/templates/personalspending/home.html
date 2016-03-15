@@ -26,10 +26,15 @@
 		      		<tr ng-repeat="transaction in transactions | orderBy: userTransactions | limitTo: query.limit : (query.page -1) * query.limit">
 		    			<td md-cell><p>{{transaction.date}}</p></td>
 		    			<td md-cell><p>{{transaction.name}}</p></td>
-		    			<td md-cell><p>{{transaction.category[0]}}</p></td>
+		    			<td md-cell>
+		    				<md-select ng-model="transaction.slateAccount" placeholder="Account Type">
+    							<md-option ng-click="debug()" ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>
+  							</md-select>
+  						</td>
 		    			<td md-cell><p>${{transaction.amount}}</p></td>
 		    			<td md-cell hide-gt-xs show-gt-md><div ng-show="addressRecorded(transaction)"><p>{{transaction.meta.location.address}} {{typeoftransaction.meta.location.city}}, {{transaction.meta.location.state}} {{transaction.meta.location.zip}}</p></td>
 		    			<td md-cell><p></p></td>
+		    			<td md-cell><md-button class="md-primary" ng-show="transaction.slateAccount" ng-click="categorizetransaction(transaction)"><i class="material-icons">clear</i></md-button></td>
 		      		</tr>
 		    	</tbody>
 		  	</table>

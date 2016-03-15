@@ -1,4 +1,4 @@
-app.controller('loginController', ['$scope', '$http', 'plaidLink', 'Data', function($scope, $http, plaidLink, Data){
+app.controller('loginController', ['$scope', '$http', 'plaidLink', function($scope, $http, plaidLink){
     
     $scope.login = function(){
         $http({
