@@ -109,7 +109,7 @@
                     </md-list-item>
                     <md-list-item>
                         <div flex></div>
-                        <div flex><md-button ui-sref="personalspending" ng-click="toggleRight()" class="md-primary">Budget Funds</md-button></div>
+                        <div flex><md-button ui-sref="budgetfund" ng-click="toggleRight()" class="md-primary">Budget Funds</md-button></div>
                         <div flex></div>
                     </md-list-item>
                     <md-list-item>
@@ -137,7 +137,7 @@
                 <!-- Liabilities Modules -->
                 <md-content flex class="module-groups">
                     <div layout="row" class="modules">
-                        <div ng-click="toggleRight()" class="personal-module-img module-selection-personal" flex>Personal Spending</div>
+                        <div ng-click="toggleRight()" ui-sref="personalspending" class="personal-module-img module-selection-personal" flex>Personal Spending</div>
                         <div ng-click="toggleRight()" class="fixed-module-img module-selection-fixed" flex>Fixed Expenses</div>
                         <div ng-click="toggleRight()" class="home-module-img module-selection-home" flex>Home</div>
                     </div>
@@ -175,5 +175,8 @@
         <link rel="stylesheet" href="public/stylesheets/personalspending.css"/>
         <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
         <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css"/>
+        <link href="bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+        <script src="bower_components/d3/d3.js" charset="utf-8"></script>
+        <script src="bower_components/c3/c3.js"></script>
     </body>
 </html>

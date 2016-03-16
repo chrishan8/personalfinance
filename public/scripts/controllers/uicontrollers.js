@@ -1,4 +1,7 @@
-app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', function($scope, $timeout, $mdSidenav, $log, $http) {
+app.run(function($rootScope) {
+
+})
+app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, $rootScope) {
     // Left and Right Sidenav Configurations
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildDelayedToggler('right');
@@ -33,6 +36,13 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
 
     $scope.closeright = function () {
       $mdSidenav('right').close()
+        .then(function () {
+          $log.debug("close RIGHT is done");
+        });
+    };
+
+    $rootScope.closeright = function () {
+        $mdSidenav('right').close()
         .then(function () {
           $log.debug("close RIGHT is done");
         });
@@ -234,4 +244,130 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', f
             })
     }
     calculateAccountsTotal();
+}])
+
+app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, $rootScope) {
+    var getprofile = function() {
+        $http({
+            method : 'GET',
+            url    : '/api/me',
+        }).then(function(returnData){
+            if ( returnData.data.user ) {
+                console.log(returnData.data.user);
+                $scope.user = returnData.data.user;
+            }
+        })
+    }
+    getprofile();
+
+    $scope.closeright = $rootScope.closeright();
+
+    var data1 = ['Groceries']
+    var data2 = ['Clothes']
+    var data3 = ['Restaurants']
+    var data4 = ['Coffee, Alcohol & Misc']
+    var data5 = ['Health']
+    var data6 = ['Recreation']
+    var data7 = ['Gift']
+    var data8 = ['Books & Supplies']
+
+    var sortspenddata = function() {
+        for (var i = 0; i < $scope.user.slateAccounts.personal_spending.transactions.length; i++) {
+            if (typeof $scope.user.slateAccounts.personal_spending.transactions[i].category != 'undefined') {
+                if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Groceries') {
+                    data1.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Clothes') {
+                    data2.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Restaurants') {
+                    data3.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Coffee, Alcohol & Misc') {
+                    data4.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Health') {
+                    data5.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Recreation') {
+                    data6.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Gift') {
+                    data7.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+                else if ($scope.user.slateAccounts.personal_spending.transactions[i].category[0] == 'Books & Supplies') {
+                    data8.push($scope.user.slateAccounts.personal_spending.transactions[i].amount);
+                }
+            }
+            else {
+                console.log('undefined');
+            }
+        }
+    }
+    sortspenddata();
+
+    var chart = c3.generate({
+        bindto: '#chart',
+        data: {
+            columns: [
+            ],
+            type : 'pie',
+            onclick: function (d, i) { console.log("onclick", d, i); },
+            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+        }
+    });
+
+    setTimeout(function () {
+        chart.load({
+            columns: [
+                data1,
+                data2,
+                data3,
+                data4,
+                data5,
+                data6,
+                data7,
+                data8
+            ]
+        });
+    }, 1500);
+
+    $scope.getCategories = function() {
+        var types = [
+            'Groceries',
+            'Clothes',
+            'Restaurants',
+            'Coffee, Alcohol & Misc',
+            'Health',
+            'Recreation',
+            'Gift',
+            'Books & Supplies',
+        ]
+        return types;
+    }
+
+    $scope.categorizespending = function(transaction) {
+        console.log(transaction);
+        $http({
+            method : 'POST',
+            url    : '/api/categorizespending',
+            data   : [transaction, {id: $scope.user._id}]
+        }).then(function(returnData){
+            console.log(returnData.data)
+            $http({
+                method : 'GET',
+                url    : '/api/me',
+            }).then(function(returnData){
+                if ( returnData.data.user ) {
+                    console.log(returnData.data.user);
+                    $scope.user = returnData.data.user;
+                }
+            })
+        })
+    }
+}])
+
+app.controller('paperCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', function($scope, $timeout, $mdSidenav, $log, $http) {
+    
 }])

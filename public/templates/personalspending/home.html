@@ -1,65 +1,21 @@
 <md-toolbar class="md-whiteframe-1dp module-title">
     <div class="md-toolbar-tools titleelement">
-        <div flex class="md-title">Budget Funds</div>
+        <div flex class="md-title">Personal Spending</div>
 		<md-button ng-click="closeright()" class="md-primary">Close Module</md-button>
     </div>
 </md-toolbar>
 <md-content layout-padding>
 	<md-card>
-		<md-toolbar class="md-table-toolbar md-default" ng-hide="options.rowSelection && selected.length">
-          	<div class="md-toolbar-tools table-title">
-            	<span flex>Budget Your Funds</span>
-            	<md-button class="md-primary" ng-click="fundbudget()"><i class="material-icons">save</i></md-button>
-          	</div>
-        </md-toolbar>
-        <div class="cardcontentcontainer">
-	        <p>Fixed Expenses</p>
-			<md-input-container class="sliderinput">
-            	<label>Fixed Expenses</label>
-            	<input ng-model="slider.fixed">
-          	</md-input-container>
-			<rzslider rz-slider-model="slider.fixed" rz-slider-options="{floor: 0, ceil: calculateTotal('checking') - (slider.invest + slider.short + slider.develop + slider.spend + slider.retire)}"></rzslider>
-			<p>Investment</p>
-			<md-input-container class="sliderinput">
-            	<label>Investment</label>
-            	<input ng-model="slider.invest">
-          	</md-input-container>
-			<rzslider flex rz-slider-model="slider.invest" rz-slider-options="{floor: 0, ceil: calculateTotal('checking') - (slider.fixed + slider.short + slider.develop + slider.spend + slider.retire)}"></rzslider>
-			<p>Short Term Savings</p>
-			<md-input-container class="sliderinput">
-            	<label>Short Term Savings</label>
-            	<input ng-model="slider.short">
-          	</md-input-container>			
-			<rzslider flex rz-slider-model="slider.short" rz-slider-options="{floor: 0, ceil: calculateTotal('checking') - (slider.fixed + slider.invest + slider.develop + slider.spend + slider.retire)}"></rzslider>
-			<p>Personal Development</p>
-			<md-input-container class="sliderinput">
-            	<label>Personal Development</label>
-            	<input ng-model="slider.develop">
-          	</md-input-container>			
-			<rzslider flex rz-slider-model="slider.develop" rz-slider-options="{floor: 0, ceil: calculateTotal('checking') - (slider.fixed + slider.invest + slider.short + slider.spend + slider.retire)}"></rzslider>
-			<p>Personal Spending</p>
-			<md-input-container class="sliderinput">
-            	<label>Personal Spending</label>
-            	<input ng-model="slider.spend">
-          	</md-input-container>
-			<rzslider flex rz-slider-model="slider.spend" rz-slider-options="{floor: 0, ceil: calculateTotal('checking') - (slider.fixed + slider.invest + slider.short + slider.develop + slider.retire)}"></rzslider>
-			<p>Retirement</p>
-			<md-input-container class="sliderinput">
-            	<label>Retirement</label>
-            	<input ng-model="slider.retire">
-          	</md-input-container>
-			<rzslider flex rz-slider-model="slider.retire" rz-slider-options="{floor: 0, ceil: calculateTotal('checking') - (slider.fixed + slider.invest + slider.short + slider.develop + slider.spend)}"></rzslider>
-		</div>
+		<div id="chart"></div>
 	</md-card>
-</md-content>
-<md-content layout-padding>
 	<md-card>
-		<md-toolbar class="md-table-toolbar md-default" ng-hide="options.rowSelection && selected.length">
-          	<div class="md-toolbar-tools table-title">
-            	<span>File Your New Transactions</span>
-          	</div>
-        </md-toolbar>
 		<md-table-container>
+			<md-toolbar class="md-table-toolbar md-default" ng-hide="options.rowSelection && selected.length">
+          		<div class="md-toolbar-tools table-title">
+            		<span flex>Categorize Your Personal Spending Transactions</span>
+            		<md-button class="md-primary" ng-click="fundbudget()"><i class="material-icons">save</i></md-button>
+          		</div>
+       		</md-toolbar>
 		  	<table md-table>
 		    	<thead md-head md-order="userTransactions">
 		      		<th md-column md-order-by="date"><span>Date</span></th>
@@ -70,19 +26,18 @@
 		      		<th md-column><span>Notes</span></th>
 		    	</thead>
 		    	<tbody md-body>
-		      		<!-- we can let ng-repeat sort the columns for us -->
-		      		<tr ng-repeat="transaction in usertransactionsdata | orderBy: userTransactions | limitTo: query.limit : (query.page -1) * query.limit">
-		    			<td md-cell><p>{{transaction.date}}</p></td>
-		    			<td md-cell><p>{{transaction.name}}</p></td>
+		      		<tr ng-repeat="spendingtransaction in user.slateAccounts.personal_spending.transactions | orderBy: userTransactions | limitTo: query.limit : (query.page -1) * query.limit">
+		    			<td md-cell><p>{{spendingtransaction.date}}</p></td>
+		    			<td md-cell><p>{{spendingtransaction.name}}</p></td>
 		    			<td md-cell>
-		    				<md-select ng-model="transaction.slateAccount" placeholder="Account Type">
-    							<md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>
+		    				<md-select ng-model="spendingtransaction.category[0]" placeholder="{{spendingtransaction.category[0]}}">
+    							<md-option ng-value="type" ng-repeat="type in getCategories()">{{type}}</md-option>
   							</md-select>
   						</td>
-		    			<td md-cell><p>${{transaction.amount}}</p></td>
-		    			<td md-cell hide-gt-xs show-gt-md><div ng-show="addressRecorded(transaction)"><p>{{transaction.meta.location.address}} {{typeoftransaction.meta.location.city}}, {{transaction.meta.location.state}} {{transaction.meta.location.zip}}</p></td>
+		    			<td md-cell><p>${{spendingtransaction.amount}}</p></td>
+		    			<td md-cell hide-gt-xs show-gt-md><div ng-show="addressRecorded(spendingtransaction)"><p>{{spendingtransaction.meta.location.address}} {{spendingtransaction.meta.location.city}}, {{spendingtransaction.meta.location.state}} {{spendingtransaction.meta.location.zip}}</p></td>
 		    			<td md-cell><p></p></td>
-		    			<td md-cell><md-button class="md-primary" ng-show="transaction.slateAccount" ng-click="categorizetransaction(transaction)"><i class="material-icons">save</i></md-button></td>
+		    			<td md-cell><md-button class="md-primary" ng-show="spendingtransaction.category[0]" ng-click="categorizespending(spendingtransaction)"><i class="material-icons">save</i></md-button></td>
 		      		</tr>
 		    	</tbody>
 		  	</table>
@@ -90,8 +45,3 @@
 		<md-table-pagination md-options="query.options" md-limit="query.limit" md-page="query.page" md-total="{{user.transactions.length}}"></md-table-pagination>
 	</md-card>
 </md-content>
-
-
-
-
-

@@ -9,6 +9,7 @@ var appCtrl = require('./controllers/usercontroller');
 var User = require('./models/user');
 var plaid = require('plaid');
 var db = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var app = express();
 // Configure Morgan
@@ -212,6 +213,20 @@ app.post('/api/categorizetransaction', function(req, res) {
   else {
     res.send({err: 'error categorizing'});
   }
+})
+
+app.post('/api/categorizespending', function(req, res) {
+  User.User.findOne({_id : new ObjectId(req.body[1].id)},function(err,foundUser) {
+    for (var i = 0; i < foundUser.slateAccounts.personal_spending.transactions.length; i++) {
+      if (foundUser.slateAccounts.personal_spending.transactions[i]._id === req.body[0]._id) {
+        foundUser.slateAccounts.personal_spending.transactions[i].category[0] = req.body[0].category[0]
+        foundUser.markModified('slateAccounts')
+        foundUser.save(function (err,savedUser) {
+          res.send(savedUser)
+        })
+      }
+    }
+  })
 })
 
 app.post('/api/fundbudget', function(req, res) {
