@@ -127,24 +127,24 @@
                 <!-- Assets Modules -->
                 <md-content flex class="module-groups">
                     <div layout="row" class="modules">
-                        <div ng-click="toggleRight()" class="paperassets-module-img module-selection" flex>Paper Assets</div>
-                        <div ng-click="toggleRight()" class="commodities-module-img module-selection" flex>Commodities</div>
-                        <div ng-click="toggleRight()" class="realestate-module-img module-selection" flex>Real Estate</div>
-                        <div ng-click="toggleRight()" class="entrepreneurial-module-img module-selection" flex>Entrepreneurial</div>
+                        <div ng-click="toggleRight()" class="paperassets-module-img module-selection" flex><p class="moduletitle">Paper Assets</p></div>
+                        <div ng-click="toggleRight()" class="commodities-module-img module-selection" flex><p class="moduletitle">Commodities</p></div>
+                        <div ng-click="toggleRight()" class="realestate-module-img module-selection" flex><p class="moduletitle">Real Estate</p></div>
+                        <div ng-click="toggleRight()" class="entrepreneurial-module-img module-selection" flex><p class="moduletitle">Entrepreneurial</p></div>
                     </div>
                 </md-content>
                 <md-divider></md-divider>
                 <!-- Liabilities Modules -->
                 <md-content flex class="module-groups">
                     <div layout="row" class="modules">
-                        <div ng-click="toggleRight()" ui-sref="personalspending" class="personal-module-img module-selection-personal" flex>Personal Spending</div>
-                        <div ng-click="toggleRight()" class="fixed-module-img module-selection-fixed" flex>Fixed Expenses</div>
-                        <div ng-click="toggleRight()" class="home-module-img module-selection-home" flex>Home</div>
+                        <div ng-click="toggleRight()" ui-sref="personalspending" class="personal-module-img module-selection-personal" flex><p class="moduletitle">Personal Spending</p><p class="moduletitle negativecashflow">-${{AccountsTotal.spend.toFixed(2)}}</p></div>
+                        <div ng-click="toggleRight()" class="fixed-module-img module-selection-fixed" flex><p class="moduletitle">Fixed Expenses</p></div>
+                        <div ng-click="toggleRight()" class="home-module-img module-selection-home" flex><p class="moduletitle">Mortgage</p></div>
                     </div>
                     <div layout="row" class="modules">
-                        <div ng-click="toggleRight()" class="car-module-img module-selection-car" flex>Car</div>
-                        <div ng-click="toggleRight()" class="business-module-img module-selection-business" flex>Business</div>
-                        <div ng-click="toggleRight()" class="student-module-img module-selection-student" flex>Student</div>
+                        <div ng-click="toggleRight()" class="car-module-img module-selection-car" flex><p class="moduletitle">Car Loan</p></div>
+                        <div ng-click="toggleRight()" class="business-module-img module-selection-business" flex><p class="moduletitle">Business Loan</p></div>
+                        <div ng-click="toggleRight()" class="student-module-img module-selection-student" flex><p class="moduletitle">Student Loan</p></div>
                     </div>
                 </md-content>
             </div>

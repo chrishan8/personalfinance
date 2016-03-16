@@ -1,5 +1,5 @@
 app.run(function($rootScope) {
-
+    $rootScope.closeright;
 })
 app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '$rootScope', function($scope, $timeout, $mdSidenav, $log, $http, $rootScope) {
     // Left and Right Sidenav Configurations
@@ -47,6 +47,8 @@ app.controller('UICtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$http', '
           $log.debug("close RIGHT is done");
         });
     };
+
+    console.log($rootScope.closeright);
 
     // Populate Sidenav with Data
     $scope.userfinancialdata = [];
@@ -260,7 +262,7 @@ app.controller('personalCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$ht
     }
     getprofile();
 
-    $scope.closeright = $rootScope.closeright();
+    $scope.closeright = $rootScope.closeright
 
     var data1 = ['Groceries']
     var data2 = ['Clothes']
