@@ -1,0 +1,83 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools theme">
+        <h2>Portal</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <i class="material-icons">close_dialog</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Login">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Welcome Back</h1>
+            <div layout-gt-sm="column">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>E-mail</label>
+                <input ng-model="loginForm.username">
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Password</label>
+                <input ng-model="loginForm.password">
+              </md-input-container>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Register">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Let's Be Friends</h1>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>First name</label>
+                <input>
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Last Name</label>
+                <input>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>E-mail</label>
+                <input>
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Confirm E-mail</label>
+                <input>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Password</label>
+                <input>
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Confirm Password</label>
+                <input>
+              </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Secret Question</label>
+                <input>
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Secret Answer</label>
+                <input>
+              </md-input-container>
+            </div>
+            <md-button class="md-primary" ng-click="registerPlaid()">Link Bank Account</md-button>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="login()" style="margin-right:20px;" >
+        Submit
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

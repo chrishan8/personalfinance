@@ -10,4 +10,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
         	templateUrl: '/public/templates/personalspending/home.html',
         	controller: 'personalCtrl'
         })
+        .state('realestate', {
+            url: '/realestate',
+            templateUrl: '/public/templates/realestate/home.html',
+        })
     })

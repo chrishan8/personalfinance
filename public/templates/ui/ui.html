@@ -2,6 +2,7 @@
 <html ng-app="financeapp">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Cash Flow</title>
         <!-- Angular Material style sheet -->
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     </head>
@@ -9,7 +10,7 @@
         <!-- Navbar -->
         <md-toolbar layout="row" class="titleelement md-whiteframe-z3">
             <md-button ng-click="toggleLeft(); closeright()" class="md-primary cashnavtoggle"></md-button>
-            <h1>Slate</h1>
+            <h1>Cash Flow</h1>
             <span flex></span>
             <h1>Home</h1>
             <span flex></span>
@@ -129,7 +130,7 @@
                     <div layout="row" class="modules">
                         <div ng-click="toggleRight()" class="paperassets-module-img module-selection" flex><p class="moduletitle">Paper Assets</p></div>
                         <div ng-click="toggleRight()" class="commodities-module-img module-selection" flex><p class="moduletitle">Commodities</p></div>
-                        <div ng-click="toggleRight()" class="realestate-module-img module-selection" flex><p class="moduletitle">Real Estate</p></div>
+                        <div ng-click="toggleRight()" ui-sref="realestate" class="realestate-module-img module-selection" flex><p class="moduletitle">Real Estate</p></div>
                         <div ng-click="toggleRight()" class="entrepreneurial-module-img module-selection" flex><p class="moduletitle">Entrepreneurial</p></div>
                     </div>
                 </md-content>
@@ -156,7 +157,6 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <!-- Angular Material Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>

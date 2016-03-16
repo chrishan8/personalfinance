@@ -249,7 +249,7 @@ app.get('/', function(req, res){
     if (!req.session.count ) { req.session.count = 0}
     console.log(req.session.count++)
     console.log(req.user)
-    res.sendFile('/templates/signup/login.html', {root: './public'})
+    res.sendFile('/templates/login/home.html', {root: './public'})
 })
 app.get('/dashboard', app.isAuthenticated, function(req, res){
     res.sendFile('templates/ui/ui.html', {root: './public'})
